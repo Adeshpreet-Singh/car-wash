@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sky: #0ea5e9;
+  --color-sky-light: #38bdf8;
+  --color-sky-bg: #f0f9ff;
+  --color-navy: #0c4a6e;
+  --color-clean-white: #ffffff;
+  --color-off-white: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+}
+
+html { scroll-behavior: smooth; }
+body { background-color: var(--color-off-white); color: var(--color-text); }
+
+.card-clean { transition: transform 0.2s, box-shadow 0.2s; border: 1px solid var(--color-border); border-radius: 0.75rem; }
+.card-clean:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+
+:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
