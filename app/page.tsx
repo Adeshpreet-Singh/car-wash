@@ -147,7 +147,7 @@ export default function Home() {
               </div>
             </div>
             <div className="bg-white rounded-2xl shadow-xl p-8">
-              <form noValidate className="space-y-6">
+              <form onSubmit={(e) => e.preventDefault()} noValidate className="space-y-6">
                 <div><label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-2">Your Name</label><input id="contact-name" type="text" aria-required="true" placeholder="Alex Driver" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"/></div>
                 <div><label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-2">Email</label><input id="contact-email" type="email" aria-required="true" placeholder="alex@example.com" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"/></div>
                 <div><label htmlFor="contact-package" className="block text-sm font-medium text-gray-700 mb-2">Package</label><select id="contact-package" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"><option value="">Select package</option><option value="express">Express Wash - $15</option><option value="full">Full Service - $35</option><option value="premium">Premium Detail - $149</option><option value="ceramic">Ceramic Coating - $599</option></select></div>
