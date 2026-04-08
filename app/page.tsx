@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -54,7 +55,19 @@ export default function Home() {
           </div>
         </nav>
       </header>
-      <main id="main-content" role="main">
+      
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{__html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Car Wash",
+            "url": "https://car-wash.com",
+            "description": "Professional car wash services.",
+          })}}
+        />
+
+        <main id="main-content" role="main">
         <section aria-labelledby="hero-heading" className="pt-24 pb-16 relative overflow-hidden">
           <div className="absolute inset-0" aria-hidden="true"><div className="absolute top-20 right-20 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl"/></div>
           <div className="relative max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
@@ -147,12 +160,39 @@ export default function Home() {
               </div>
             </div>
             <div className="bg-white rounded-2xl shadow-xl p-8">
-              <form onSubmit={(e) => e.preventDefault()} noValidate className="space-y-6">
+              <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); setTimeout(() => setSubmitted(false), 3000); }} noValidate className="space-y-6">
                 <div><label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-2">Your Name</label><input id="contact-name" type="text" aria-required="true" placeholder="Alex Driver" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"/></div>
                 <div><label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-2">Email</label><input id="contact-email" type="email" aria-required="true" placeholder="alex@example.com" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"/></div>
                 <div><label htmlFor="contact-package" className="block text-sm font-medium text-gray-700 mb-2">Package</label><select id="contact-package" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"><option value="">Select package</option><option value="express">Express Wash - $15</option><option value="full">Full Service - $35</option><option value="premium">Premium Detail - $149</option><option value="ceramic">Ceramic Coating - $599</option></select></div>
                 <button type="submit" aria-label="Book your car wash" className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-all hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2">Book Now</button>
+              {submitted && <p className="text-center text-green-500 text-sm mt-2 animate-pulse">Sent! We will be in touch soon.</p>}
               </form>
+            </div>
+          </div>
+        </section>
+      
+        {/* FAQ Section */}
+        <section className="py-24" aria-labelledby="faq-heading">
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 id="faq-heading" className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+              <p className="text-current/60">Everything you need to know.</p>
+            </div>
+            <div className="space-y-4">
+              {{[
+          {question: 'How do I schedule an appointment?', answer: 'Call us, text us, or fill out the contact form. We typically respond within 1 hour during business hours.'},
+          {question: 'Are you licensed and insured?', answer: 'Yes. We are fully licensed, bonded, and carry comprehensive liability insurance.'},
+          {question: 'Do you offer free estimates?', answer: 'Yes. We provide free, no-obligation estimates for all services. Call or fill out our form to get started.'},
+          {question: 'What areas do you serve?', answer: 'We serve the entire metro area. Contact us to confirm service availability in your specific location.'}
+              ].map((faq, i) => (
+                <details key={i} className="group border border-current/10 rounded-xl p-5 [&_summary]:cursor-pointer">
+                  <summary className="font-medium flex justify-between items-center list-none">
+                    {faq.question}
+                    <span className="ml-4 text-current/40 group-open:rotate-45 transition-transform">+</span>
+                  </summary>
+                  <p className="mt-3 text-current/60 text-sm leading-relaxed">{faq.answer}</p>
+                </details>
+              ))}}
             </div>
           </div>
         </section>
@@ -200,7 +240,13 @@ export default function Home() {
           <div className="border-t border-blue-800 pt-8 text-center">
             <p className="text-blue-300 text-sm">&copy; 2026 ShineTime Car Wash. All rights reserved.</p>
           </div>
-        </div>
+        
+            <div className="flex gap-4 text-sm">
+              <a href="#" className="hover:underline">Twitter</a>
+              <a href="#" className="hover:underline">LinkedIn</a>
+              <a href="#" className="hover:underline">Instagram</a>
+            </div>
+          </div>
       </footer>
     </div>
   );
