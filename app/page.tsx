@@ -112,7 +112,7 @@ Every time.</h2>
       <section id="contact" className="py-24" aria-labelledby="contact-heading">
         <div className="max-w-xl mx-auto px-6 text-center">
           <h2 id="contact-heading" className="text-3xl font-bold mb-8">Contact Us</h2>
-          <div className="space-y-4 text-cyan-300 mb-8">                  <div><div className="font-bold">Phone</div><a href="tel:(555) 012-3456" class="text-cyan-400">(555) 012-3456</a></div>
+          <div className="space-y-4 text-cyan-300 mb-8">                  <div><div className="font-bold">Phone</div><a href="tel:(555) 012-3456" className="text-cyan-400">(555) 012-3456</a></div>
                   <div><div className="font-bold">Address</div><p>1200 Speedway Blvd, Phoenix, AZ</p></div>
                   <div><div className="font-bold">Hours</div><p>Daily 7 AM – 9 PM</p></div></div>
           <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
