@@ -179,7 +179,7 @@ export default function Home() {
               <p className="text-current/60">Everything you need to know.</p>
             </div>
             <div className="space-y-4">
-              {{[
+              {[
           {question: 'How do I schedule an appointment?', answer: 'Call us, text us, or fill out the contact form. We typically respond within 1 hour during business hours.'},
           {question: 'Are you licensed and insured?', answer: 'Yes. We are fully licensed, bonded, and carry comprehensive liability insurance.'},
           {question: 'Do you offer free estimates?', answer: 'Yes. We provide free, no-obligation estimates for all services. Call or fill out our form to get started.'},
@@ -192,7 +192,7 @@ export default function Home() {
                   </summary>
                   <p className="mt-3 text-current/60 text-sm leading-relaxed">{faq.answer}</p>
                 </details>
-              ))}}
+              ))}
             </div>
           </div>
         </section>
