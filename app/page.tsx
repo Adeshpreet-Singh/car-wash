@@ -44,7 +44,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-8 bg-cyan-900/50">
+        <section className="reveal py-8 bg-cyan-900/50">
           <div className="max-w-6xl mx-auto px-6 grid grid-cols-3 gap-8 text-center">
             <div><div className="text-3xl font-black text-cyan-400">3min</div><div className="text-xs text-cyan-600 uppercase">Avg Wash Time</div></div>
             <div><div className="text-3xl font-black text-cyan-400">50K+</div><div className="text-xs text-cyan-600 uppercase">Cars Washed</div></div>
@@ -52,7 +52,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="washes" className="py-24" aria-labelledby="washes-heading">
+        <section id="washes" className="reveal py-24" aria-labelledby="washes-heading">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16"><h2 id="washes-heading" className="text-4xl font-black uppercase">Wash Packages</h2></div>
             <div className="grid md:grid-cols-3 gap-6">
@@ -71,7 +71,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="plans" className="py-24 bg-cyan-900/30" aria-labelledby="plans-heading">
+        <section id="plans" className="reveal py-24 bg-cyan-900/30" aria-labelledby="plans-heading">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-16"><h2 id="plans-heading" className="text-4xl font-black uppercase">Unlimited Plans</h2><p className="text-cyan-400 mt-3">Wash as often as you want. Free vacuums included.</p></div>
             <div className="grid md:grid-cols-3 gap-6">
@@ -88,7 +88,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-24" aria-labelledby="faq-heading">
+        <section className="reveal py-24" aria-labelledby="faq-heading">
           <div className="max-w-3xl mx-auto px-6">
             <div className="text-center mb-12"><h2 id="faq-heading" className="text-4xl font-black uppercase">FAQ</h2></div>
             <div className="space-y-4">
@@ -106,7 +106,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="py-16">
+        <section id="contact" className="reveal py-16">
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6 text-center">
             <div className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-8"><div className="text-3xl mb-3">📍</div><div className="font-bold">Location</div><p className="text-cyan-400 text-sm">1200 Speedway Blvd<br />Phoenix, AZ 85001</p></div>
             <div className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-8"><div className="text-3xl mb-3">⏰</div><div className="font-bold">Hours</div><p className="text-cyan-400 text-sm">Daily 7 AM – 9 PM<br />365 days a year</p></div>
