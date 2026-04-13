@@ -161,31 +161,31 @@ export default function Home() {
           <div className="hidden md:flex items-center gap-6">
             <button
               onClick={() => scrollTo('packages')}
-              className="text-sm text-cyan-400 hover:text-cyan-200 transition-colors"
+              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Packages
             </button>
             <button
               onClick={() => scrollTo('addons')}
-              className="text-sm text-cyan-400 hover:text-cyan-200 transition-colors"
+              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Add-Ons
             </button>
             <button
               onClick={() => scrollTo('plans')}
-              className="text-sm text-cyan-400 hover:text-cyan-200 transition-colors"
+              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Plans
             </button>
             <button
               onClick={() => scrollTo('testimonials')}
-              className="text-sm text-cyan-400 hover:text-cyan-200 transition-colors"
+              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Testimonials
             </button>
             <button
               onClick={() => scrollTo('how')}
-              className="text-sm text-cyan-400 hover:text-cyan-200 transition-colors"
+              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               How It Works
             </button>
