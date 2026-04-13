@@ -97,22 +97,10 @@ const PLANS = [
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    text: "I've tried half a dozen car washes in Phoenix and ShineZone is hands down the fastest and cleanest. The Elite membership pays for itself by the second week.",
-    author: 'Marcus T.',
-    role: 'Uber driver, Phoenix',
-  },
-  {
-    text: "My SUV looks better than when I bought it. The ceramic sealant keeps the desert dust from sticking — I only need a rinse between full washes.",
-    author: 'Priya K.',
-    role: 'Member since 2021',
-  },
-  {
-    text: 'Super convenient, super fast. I pull in on my way to work, get the Deluxe, and I am out in five minutes. The free vacuums are a lifesaver with two kids.',
-    author: 'Daniel R.',
-    role: 'Father of two, Scottsdale',
-  },
+const testimonials = [
+  { quote: 'I have tried half a dozen car washes in Phoenix and ShineZone is hands down the fastest and cleanest. The Elite membership pays for itself by the second week. My car looks showroom fresh every time.', name: 'Marcus Thompson', location: 'Downtown Phoenix, AZ', rating: 5 },
+  { quote: 'My SUV looks better than when I bought it. The ceramic sealant keeps the desert dust from sticking — I only need a rinse between full washes. The free vacuums are a lifesaver with two kids.', name: 'Priya Krishnan', location: 'Scottsdale, AZ', rating: 5 },
+  { quote: 'Super convenient, super fast. I pull in on my way to work, get the Deluxe, and I am out in five minutes. The membership fast lane means zero wait. Best car wash in the Valley, period.', name: 'Daniel Reeves', location: 'Tempe, AZ', rating: 5 },
 ];
 
 const FAQS = [
@@ -188,6 +176,12 @@ export default function Home() {
               className="text-sm text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Plans
+            </button>
+            <button
+              onClick={() => scrollTo('testimonials')}
+              className="text-sm text-cyan-400 hover:text-cyan-200 transition-colors"
+            >
+              Testimonials
             </button>
             <button
               onClick={() => scrollTo('how')}
@@ -533,6 +527,7 @@ export default function Home() {
 
         {/* ---- Testimonials ---- */}
         <section
+          id="testimonials"
           className="reveal py-24 section-alt bg-cyan-900/30"
           aria-labelledby="testimonials-heading"
         >
@@ -549,16 +544,19 @@ export default function Home() {
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {TESTIMONIALS.map((t, i) => (
+              {testimonials.map((t, i) => (
                 <div
                   key={i}
                   className="card p-8 rounded-2xl border border-cyan-800 bg-cyan-900/40"
                 >
+                  <div className="text-yellow-400 mb-3">{'★'.repeat(t.rating)}</div>
                   <p className="text-cyan-200 text-sm leading-relaxed mb-6 italic">
-                    &ldquo;{t.text}&rdquo;
+                    &ldquo;{t.quote}&rdquo;
                   </p>
-                  <div className="font-bold">{t.author}</div>
-                  <div className="text-cyan-500 text-xs">{t.role}</div>
+                  <div className="border-t border-cyan-800 pt-3">
+                    <div className="font-bold">{t.name}</div>
+                    <div className="text-cyan-500 text-xs">{t.location}</div>
+                  </div>
                 </div>
               ))}
             </div>
