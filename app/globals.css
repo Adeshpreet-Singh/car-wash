@@ -283,3 +283,80 @@ li {
 .card:nth-child(4) { transition-delay: 180ms; }
 .card:nth-child(5) { transition-delay: 240ms; }
 .card:nth-child(6) { transition-delay: 300ms; }
+
+
+/* ===== ADVANCED 10/10 POLISH ===== */
+
+/* Form focus glow */
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent, #0075de) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent, #0075de) 15%, transparent) !important;
+  outline: none !important;
+}
+
+/* Better button press effect */
+.btn:active {
+  transform: scale(0.96) !important;
+  box-shadow: none !important;
+}
+
+/* Card entrance animation */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card.visible {
+  animation: cardIn 0.5s ease forwards;
+}
+
+/* Smooth section transitions */
+section {
+  overflow: hidden;
+}
+
+/* Better image containers */
+img {
+  border-radius: var(--radius, 8px);
+}
+
+/* FAQ accordion smooth expand */
+details summary::-webkit-details-marker { display: none; }
+details[open] summary ~ * {
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Nav link hover underline */
+nav button:hover, nav a:hover {
+  opacity: 1 !important;
+  position: relative;
+}
+
+/* Better badge styling */
+.badge {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Smooth page transitions */
+main {
+  animation: pageLoad 0.6s ease;
+}
+@keyframes pageLoad {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Better scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg, #fff); }
+::-webkit-scrollbar-thumb { 
+  background: color-mix(in srgb, var(--accent, #0075de) 30%, transparent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent, #0075de) 50%, transparent);
+}

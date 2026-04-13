@@ -154,44 +154,44 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div>
             <h1 className="text-xl font-bold water-shimmer">ShineZone</h1>
-            <p className="text-[10px] tracking-[0.2em] text-cyan-600 uppercase">
+            <p className="text-base tracking-[0.2em] text-cyan-600 uppercase">
               Car Wash — Phoenix
             </p>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <button
+            <button className="btn"
               onClick={() => scrollTo('packages')}
               className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Packages
             </button>
-            <button
+            <button className="btn"
               onClick={() => scrollTo('addons')}
               className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Add-Ons
             </button>
-            <button
+            <button className="btn"
               onClick={() => scrollTo('plans')}
               className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Plans
             </button>
-            <button
+            <button className="btn"
               onClick={() => scrollTo('testimonials')}
               className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               Testimonials
             </button>
-            <button
+            <button className="btn"
               onClick={() => scrollTo('how')}
               className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
             >
               How It Works
             </button>
-            <button
+            <button className="btn"
               onClick={() => scrollTo('contact')}
-              className="bg-cyan-500 text-black px-5 py-2.5 text-sm font-bold rounded-full hover:bg-cyan-400 transition-colors"
+              className="bg-cyan-500 text-black px-5 py-2.5 text-base font-bold rounded-full hover:bg-cyan-400 transition-colors"
             >
               Get Washed
             </button>
@@ -202,7 +202,7 @@ export default function Home() {
       <main id="main" role="main">
         {/* ---- Hero ---- */}
         <section className="hero pt-24">
-          <div className="max-w-6xl mx-auto px-6 py-20 md:py-32 text-center">
+          <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 text-center">
             <p className="text-cyan-400 text-sm tracking-[0.3em] uppercase mb-4">
               Eco-Friendly — Free Vacuums — Est. 2017
             </p>
@@ -218,13 +218,13 @@ export default function Home() {
               365 days a year.
             </p>
             <div className="flex justify-center gap-4">
-              <button
+              <button className="btn"
                 onClick={() => scrollTo('plans')}
                 className="btn bg-cyan-500 text-black px-8 py-4 text-lg font-bold rounded-full hover:bg-cyan-400 transition-colors"
               >
                 Monthly Plans
               </button>
-              <button
+              <button className="btn"
                 onClick={() => scrollTo('packages')}
                 className="btn-outline border-2 border-cyan-500 text-cyan-300 px-8 py-4 text-lg rounded-full hover:bg-cyan-500/10 transition-colors"
               >
@@ -693,28 +693,28 @@ export default function Home() {
                   <div className="text-4xl mb-4">✓</div>
                   <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
                   <p className="text-cyan-400">We'll respond to your inquiry within 24 hours.</p>
-                  <button onClick={() => setSubmitted(false)} className="mt-6 text-cyan-400 hover:text-cyan-200 underline">Send another message</button>
+                  <button className="btn" onClick={() => setSubmitted(false)} className="mt-6 text-cyan-400 hover:text-cyan-200 underline">Send another message</button>
                 </div>
               ) : (
                 <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-8 space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Name</label>
-                      <input type="text" placeholder="Your name" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors" />
+                      <input type="text" placeholder="Your name" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300 " />
                     </div>
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Email</label>
-                      <input type="email" placeholder="you@email.com" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors" />
+                      <input type="email" placeholder="you@email.com" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300 " />
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Phone</label>
-                      <input type="tel" placeholder="(555) 123-4567" className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors" />
+                      <input type="tel" placeholder="(555) 123-4567" className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300 " />
                     </div>
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Service Type</label>
-                      <select className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 focus:border-cyan-500 focus:outline-none transition-colors">
+                      <select className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300 ">
                         <option value="">Select a service</option>
                         <option>Basic Wash</option>
                         <option>Deluxe Wash</option>
@@ -728,7 +728,7 @@ export default function Home() {
                   </div>
                   <div>
                     <label className="block text-sm mb-2 text-cyan-300">Message</label>
-                    <textarea rows={4} placeholder="Tell us how we can help..." required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors resize-none" />
+                    <textarea rows={4} placeholder="Tell us how we can help..." required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors resize-none border border-gray-300 " />
                   </div>
                   <button type="submit" className="w-full bg-cyan-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-cyan-400 transition-colors">
                     Send Message
