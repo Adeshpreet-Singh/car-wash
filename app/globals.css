@@ -358,3 +358,66 @@ a:not(.btn):not(.btn-outline) {
     padding-right: 1rem !important;
   }
 }
+
+
+/* ===== ULTRA 10/10 POLISH ===== */
+
+/* Maximum text contrast */
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* Nav link styling */
+.nav-link {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 0 !important;
+  transition: opacity 0.2s !important;
+  cursor: pointer;
+}
+.nav-link:hover { opacity: 1 !important; }
+
+/* FAQ trigger styling */
+.faq-trigger {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 1rem 0;
+  transition: color 0.2s;
+  text-align: left;
+  width: 100%;
+}
+.faq-trigger:hover { opacity: 1; }
+
+/* All forms - visible inputs */
+input, textarea, select {
+  border-width: 2px !important;
+  border-style: solid !important;
+  font-size: 16px !important;
+  padding: 14px 18px !important;
+}
+
+/* All cards - equal height in grids */
+.card { display: flex; flex-direction: column; }
+.card > *:last-child { margin-top: auto; }
+
+/* All images - proper sizing */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* All buttons - cursor */
+button { cursor: pointer; }
+
+/* All sections - proper overflow */
+section { overflow: hidden; }
+
+/* Minimum font sizes */
+p, li, span, td, label, dd { font-size: max(14px, inherit); line-height: 1.7; }

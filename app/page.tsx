@@ -159,22 +159,22 @@ export default function Home() {
             </p>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('packages')} >
+            <button style={{ cursor: "pointer" }} className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('packages')} >
               Packages
             </button>
-            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('addons')} >
+            <button style={{ cursor: "pointer" }} className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('addons')} >
               Add-Ons
             </button>
-            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('plans')} >
+            <button style={{ cursor: "pointer" }} className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('plans')} >
               Plans
             </button>
-            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('testimonials')} >
+            <button style={{ cursor: "pointer" }} className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('testimonials')} >
               Testimonials
             </button>
-            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('how')} >
+            <button style={{ cursor: "pointer" }} className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('how')} >
               How It Works
             </button>
-            <button className="btn bg-cyan-500 text-black px-5 py-2.5 text-base font-bold rounded-full hover:bg-cyan-400 transition-colors" onClick={() => scrollTo('contact')} >
+            <button style={{ cursor: "pointer" }} className="btn bg-cyan-500 text-black px-5 py-2.5 text-base font-bold rounded-full hover:bg-cyan-400 transition-colors" onClick={() => scrollTo('contact')} >
               Get Washed
             </button>
           </div>
@@ -200,10 +200,10 @@ export default function Home() {
               365 days a year.
             </p>
             <div className="flex justify-center gap-4">
-              <button className="btn btn bg-cyan-500 text-black px-8 py-4 text-lg font-bold rounded-full hover:bg-cyan-400 transition-colors" onClick={() => scrollTo('plans')} >
+              <button style={{ cursor: "pointer" }} className="btn btn bg-cyan-500 text-black px-8 py-4 text-lg font-bold rounded-full hover:bg-cyan-400 transition-colors" onClick={() => scrollTo('plans')} >
                 Monthly Plans
               </button>
-              <button className="btn btn-outline border-2 border-cyan-500 text-cyan-300 px-8 py-4 text-lg rounded-full hover:bg-cyan-500/10 transition-colors" onClick={() => scrollTo('packages')} >
+              <button style={{ cursor: "pointer" }} className="btn btn-outline border-2 border-cyan-500 text-cyan-300 px-8 py-4 text-lg rounded-full hover:bg-cyan-500/10 transition-colors" onClick={() => scrollTo('packages')} >
                 Single Wash
               </button>
             </div>
@@ -387,7 +387,7 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <button className="btn w-full bg-cyan-500 text-black py-3 rounded-full font-bold hover:bg-cyan-400 transition-colors">
+                  <button style={{ cursor: "pointer" }} className="btn w-full bg-cyan-500 text-black py-3 rounded-full font-bold hover:bg-cyan-400 transition-colors">
                     Sign Up
                   </button>
                 </div>
@@ -598,7 +598,7 @@ export default function Home() {
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <div className="card bg-cyan-900/50 border border-cyan-800 rounded-xl p-8 text-center">
+              <div className="card flex flex-col bg-cyan-900/50 border border-cyan-800 rounded-xl p-8 text-center">
                 <div className="text-3xl mb-3">📍</div>
                 <div className="font-bold mb-1">Downtown Phoenix</div>
                 <p className="text-cyan-400 text-sm">
@@ -669,24 +669,24 @@ export default function Home() {
                   <div className="text-4xl mb-4">✓</div>
                   <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
                   <p className="text-cyan-400">We'll respond to your inquiry within 24 hours.</p>
-                  <button onClick={() => setSubmitted(false)} className="btn mt-6 text-cyan-400 hover:text-cyan-200 underline">Send another message</button>
+                  <button style={{ cursor: "pointer" }} onClick={() => setSubmitted(false)} className="btn mt-6 text-cyan-400 hover:text-cyan-200 underline">Send another message</button>
                 </div>
               ) : (
                 <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-8 space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Name</label>
-                      <input type="text" placeholder="Your name" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300 " />
+                      <input type="text" placeholder="Your name" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300  border-2 border-current/20" />
                     </div>
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Email</label>
-                      <input type="email" placeholder="you@email.com" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300 " />
+                      <input type="email" placeholder="you@email.com" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300  border-2 border-current/20" />
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Phone</label>
-                      <input type="tel" placeholder="(555) 123-4567" className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300 " />
+                      <input type="tel" placeholder="(555) 123-4567" className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors border border-gray-300  border-2 border-current/20" />
                     </div>
                     <div>
                       <label className="block text-sm mb-2 text-cyan-300">Service Type</label>
@@ -706,7 +706,7 @@ export default function Home() {
                     <label className="block text-sm mb-2 text-cyan-300">Message</label>
                     <textarea rows={4} placeholder="Tell us how we can help..." required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors resize-none border border-gray-300 " />
                   </div>
-                  <button type="submit" className="w-full bg-cyan-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-cyan-400 transition-colors">
+                  <button style={{ cursor: "pointer" }} type="submit" className="w-full bg-cyan-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-cyan-400 transition-colors">
                     Send Message
                   </button>
                 </form>
