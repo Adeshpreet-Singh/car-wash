@@ -608,7 +608,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-12">
               <p className="badge text-cyan-400 text-xs tracking-[0.3em] uppercase mb-2">
-                Visit Us Today
+                Get In Touch
               </p>
               <h2
                 id="contact-heading"
@@ -650,7 +650,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="grid sm:grid-cols-3 gap-6 text-center">
+            <div className="grid sm:grid-cols-3 gap-6 text-center mb-12">
               <div className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-6">
                 <div className="text-2xl mb-2">⏰</div>
                 <div className="font-bold">Hours</div>
@@ -680,6 +680,61 @@ export default function Home() {
                   hello@shinezone.com
                 </a>
               </div>
+            </div>
+
+            {/* Contact Form */}
+            <div className="max-w-2xl mx-auto">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-black uppercase mb-2">Send Us a Message</h3>
+                <p className="text-cyan-400 text-sm">Have a question or special request? Fill out the form and we'll get back to you within 24 hours.</p>
+              </div>
+              {submitted ? (
+                <div className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-12 text-center">
+                  <div className="text-4xl mb-4">✓</div>
+                  <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
+                  <p className="text-cyan-400">We'll respond to your inquiry within 24 hours.</p>
+                  <button onClick={() => setSubmitted(false)} className="mt-6 text-cyan-400 hover:text-cyan-200 underline">Send another message</button>
+                </div>
+              ) : (
+                <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-8 space-y-5">
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm mb-2 text-cyan-300">Name</label>
+                      <input type="text" placeholder="Your name" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors" />
+                    </div>
+                    <div>
+                      <label className="block text-sm mb-2 text-cyan-300">Email</label>
+                      <input type="email" placeholder="you@email.com" required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors" />
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm mb-2 text-cyan-300">Phone</label>
+                      <input type="tel" placeholder="(555) 123-4567" className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors" />
+                    </div>
+                    <div>
+                      <label className="block text-sm mb-2 text-cyan-300">Service Type</label>
+                      <select className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 focus:border-cyan-500 focus:outline-none transition-colors">
+                        <option value="">Select a service</option>
+                        <option>Basic Wash</option>
+                        <option>Deluxe Wash</option>
+                        <option>Premium Wash</option>
+                        <option>Ultimate Wash</option>
+                        <option>Monthly Membership</option>
+                        <option>Fleet Services</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2 text-cyan-300">Message</label>
+                    <textarea rows={4} placeholder="Tell us how we can help..." required className="w-full bg-cyan-950/50 border border-cyan-800 rounded-lg px-4 py-3 text-cyan-50 placeholder-cyan-600 focus:border-cyan-500 focus:outline-none transition-colors resize-none" />
+                  </div>
+                  <button type="submit" className="w-full bg-cyan-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-cyan-400 transition-colors">
+                    Send Message
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </section>
