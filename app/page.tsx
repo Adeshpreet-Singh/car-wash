@@ -159,40 +159,22 @@ export default function Home() {
             </p>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <button className="btn"
-              onClick={() => scrollTo('packages')}
-              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
-            >
+            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('packages')} >
               Packages
             </button>
-            <button className="btn"
-              onClick={() => scrollTo('addons')}
-              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
-            >
+            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('addons')} >
               Add-Ons
             </button>
-            <button className="btn"
-              onClick={() => scrollTo('plans')}
-              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
-            >
+            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('plans')} >
               Plans
             </button>
-            <button className="btn"
-              onClick={() => scrollTo('testimonials')}
-              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
-            >
+            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('testimonials')} >
               Testimonials
             </button>
-            <button className="btn"
-              onClick={() => scrollTo('how')}
-              className="text-base text-cyan-400 hover:text-cyan-200 transition-colors"
-            >
+            <button className="btn text-base text-cyan-400 hover:text-cyan-200 transition-colors" onClick={() => scrollTo('how')} >
               How It Works
             </button>
-            <button className="btn"
-              onClick={() => scrollTo('contact')}
-              className="bg-cyan-500 text-black px-5 py-2.5 text-base font-bold rounded-full hover:bg-cyan-400 transition-colors"
-            >
+            <button className="btn bg-cyan-500 text-black px-5 py-2.5 text-base font-bold rounded-full hover:bg-cyan-400 transition-colors" onClick={() => scrollTo('contact')} >
               Get Washed
             </button>
           </div>
@@ -218,16 +200,10 @@ export default function Home() {
               365 days a year.
             </p>
             <div className="flex justify-center gap-4">
-              <button className="btn"
-                onClick={() => scrollTo('plans')}
-                className="btn bg-cyan-500 text-black px-8 py-4 text-lg font-bold rounded-full hover:bg-cyan-400 transition-colors"
-              >
+              <button className="btn btn bg-cyan-500 text-black px-8 py-4 text-lg font-bold rounded-full hover:bg-cyan-400 transition-colors" onClick={() => scrollTo('plans')} >
                 Monthly Plans
               </button>
-              <button className="btn"
-                onClick={() => scrollTo('packages')}
-                className="btn-outline border-2 border-cyan-500 text-cyan-300 px-8 py-4 text-lg rounded-full hover:bg-cyan-500/10 transition-colors"
-              >
+              <button className="btn btn-outline border-2 border-cyan-500 text-cyan-300 px-8 py-4 text-lg rounded-full hover:bg-cyan-500/10 transition-colors" onClick={() => scrollTo('packages')} >
                 Single Wash
               </button>
             </div>
@@ -693,7 +669,7 @@ export default function Home() {
                   <div className="text-4xl mb-4">✓</div>
                   <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
                   <p className="text-cyan-400">We'll respond to your inquiry within 24 hours.</p>
-                  <button className="btn" onClick={() => setSubmitted(false)} className="mt-6 text-cyan-400 hover:text-cyan-200 underline">Send another message</button>
+                  <button onClick={() => setSubmitted(false)} className="btn mt-6 text-cyan-400 hover:text-cyan-200 underline">Send another message</button>
                 </div>
               ) : (
                 <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} className="bg-cyan-900/50 border border-cyan-800 rounded-xl p-8 space-y-5">
