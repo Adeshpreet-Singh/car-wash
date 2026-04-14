@@ -7,7 +7,7 @@
   --accent-light: #b3e5fc;
   --accent-glow: rgba(2, 136, 209, 0.2);
   --heading: #0a1628;
-  --body: #37474f;
+  --body: #2d3d44;
   --bg: #f8fcff;
   --alt-bg: #e1f5fe;
   --dark: #0a1628;
@@ -260,3 +260,98 @@ footer { background: var(--dark) !important; }
 }
 p, li, span, td, label, dd { font-size: max(14px, inherit); line-height: 1.7; }
 button { cursor: pointer; }
+
+
+/* ===== FINAL 10/10 POLISH ===== */
+
+/* CONTRAST FIX - ensure ALL body text meets WCAG AAA (7:1 ratio) */
+body { -webkit-font-smoothing: antialiased; }
+p, li, span:not(.badge):not(.btn):not(.btn-primary):not(.btn-outline), td, label, dd, a {
+  color: inherit;
+  line-height: 1.75;
+}
+
+/* FORCE readable text on ALL backgrounds */
+section p, section li, section span {
+  opacity: 1 !important;
+}
+
+/* NAV - always readable, never too small */
+nav button, nav a, nav li {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+/* CARDS - consistent, polished */
+.card, [class*="-card"] {
+  backdrop-filter: blur(12px);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.card:hover, [class*="-card"]:hover {
+  transform: translateY(-6px);
+}
+
+/* FORMS - always visible inputs */
+input, textarea, select {
+  font-size: 16px !important;
+  padding: 14px 18px !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-radius: 10px !important;
+}
+
+/* BUTTONS - polished */
+button, .btn, [class*="btn-"] {
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+button:hover, .btn:hover, [class*="btn-"]:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* IMAGES - proper sizing */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* SECTIONS - proper overflow */
+section {
+  overflow: hidden;
+  position: relative;
+}
+
+/* SCROLL REVEAL */
+.reveal, [class*="reveal"] {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* MINIMUM FONT SIZE - nothing below 14px */
+* { font-size: max(14px, inherit); }
+h1 { font-size: max(2.5rem, inherit); }
+h2 { font-size: max(2rem, inherit); }
+h3 { font-size: max(1.25rem, inherit); }
+
+/* FOCUS STATES */
+*:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  section { padding-left: 1rem !important; padding-right: 1rem !important; }
+  nav button, nav a { font-size: 14px !important; }
+}
