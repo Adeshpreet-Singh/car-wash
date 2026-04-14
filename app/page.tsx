@@ -159,22 +159,22 @@ export default function Home() {
             </p>
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <button style={{ cursor: "pointer" }} className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('packages')} >
+            <button className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('packages')} >
               Packages
             </button>
-            <button style={{ cursor: "pointer" }} className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('addons')} >
+            <button className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('addons')} >
               Add-Ons
             </button>
-            <button style={{ cursor: "pointer" }} className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('plans')} >
+            <button className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('plans')} >
               Plans
             </button>
-            <button style={{ cursor: "pointer" }} className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('testimonials')} >
+            <button className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('testimonials')} >
               Testimonials
             </button>
-            <button style={{ cursor: "pointer" }} className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('how')} >
+            <button className="btn text-base text-blue-400 hover:text-blue-200 transition-colors" onClick={() => scrollTo('how')} >
               How It Works
             </button>
-            <button style={{ cursor: "pointer" }} className="btn bg-blue-500 text-black px-5 py-2.5 text-base font-bold rounded-full hover:bg-blue-400 transition-colors" onClick={() => scrollTo('contact')} >
+            <button className="btn bg-blue-500 text-black px-5 py-2.5 text-base font-bold rounded-full hover:bg-blue-400 transition-colors" onClick={() => scrollTo('contact')} >
               Get Washed
             </button>
           </div>
@@ -200,10 +200,10 @@ export default function Home() {
               365 days a year.
             </p>
             <div className="flex justify-center gap-4">
-              <button style={{ cursor: "pointer" }} className="btn btn bg-blue-500 text-black px-8 py-4 text-lg font-bold rounded-full hover:bg-blue-400 transition-colors" onClick={() => scrollTo('plans')} >
+              <button className="btn btn bg-blue-500 text-black px-8 py-4 text-lg font-bold rounded-full hover:bg-blue-400 transition-colors" onClick={() => scrollTo('plans')} >
                 Monthly Plans
               </button>
-              <button style={{ cursor: "pointer" }} className="btn btn-outline border-2 border-blue-500 text-blue-300 px-8 py-4 text-lg rounded-full hover:bg-blue-500/10 transition-colors" onClick={() => scrollTo('packages')} >
+              <button className="btn btn-outline border-2 border-blue-500 text-blue-300 px-8 py-4 text-lg rounded-full hover:bg-blue-500/10 transition-colors" onClick={() => scrollTo('packages')} >
                 Single Wash
               </button>
             </div>
@@ -387,7 +387,7 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <button style={{ cursor: "pointer" }} className="btn w-full bg-blue-500 text-black py-3 rounded-full font-bold hover:bg-blue-400 transition-colors">
+                  <button className="btn w-full bg-blue-500 text-black py-3 rounded-full font-bold hover:bg-blue-400 transition-colors">
                     Sign Up
                   </button>
                 </div>
@@ -669,7 +669,7 @@ export default function Home() {
                   <div className="text-4xl mb-4">✓</div>
                   <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
                   <p className="text-blue-400">We'll respond to your inquiry within 24 hours.</p>
-                  <button style={{ cursor: "pointer" }} onClick={() => setSubmitted(false)} className="btn mt-6 text-blue-400 hover:text-blue-200 underline">Send another message</button>
+                  <button onClick={() => setSubmitted(false)} className="btn mt-6 text-blue-400 hover:text-blue-200 underline">Send another message</button>
                 </div>
               ) : (
                 <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} className="bg-blue-900/50 border border-blue-800 rounded-xl p-8 space-y-5">
@@ -706,7 +706,7 @@ export default function Home() {
                     <label className="block text-sm mb-2 text-blue-300">Message</label>
                     <textarea rows={4} placeholder="Tell us how we can help..." required className="w-full bg-blue-950/50 border border-blue-800 rounded-lg px-4 py-3 text-blue-50 placeholder-blue-600 focus:border-blue-500 focus:outline-none transition-colors resize-none border border-gray-300 " />
                   </div>
-                  <button style={{ cursor: "pointer" }} type="submit" className="w-full bg-blue-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-blue-400 transition-colors">
+                  <button type="submit" className="w-full bg-blue-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-blue-400 transition-colors">
                     Send Message
                   </button>
                 </form>
