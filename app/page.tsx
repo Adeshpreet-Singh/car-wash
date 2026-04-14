@@ -1,941 +1,396 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const IMAGES = {
-  hero: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=800&q=80',
-  gallery1: 'https://images.unsplash.com/photo-1507136566006-cfc505b114fc?w=600&q=80',
-  gallery2: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80',
-  gallery3: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80',
-  gallery4: 'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&q=80',
-};
-
-const PACKAGES = [
-  {
-    name: 'Basic',
-    price: '$12',
-    time: '3 min',
-    features: [
-      'Exterior soft-cloth wash',
-      'Spot-free rinse',
-      'High-velocity air dry',
-      'Tire and rim rinse',
-    ],
-  },
-  {
-    name: 'Deluxe',
-    price: '$20',
-    time: '5 min',
-    features: [
-      'Everything in Basic',
-      'Wheel cleaning & tire shine',
-      'Carnauba wax protectant',
-      'Bug & tar remover',
-      'Undercarriage wash',
-    ],
-  },
-  {
-    name: 'Premium',
-    price: '$30',
-    time: '8 min',
-    features: [
-      'Everything in Deluxe',
-      'Interior vacuum & mat cleaning',
-      'Dashboard & console wipe',
-      'Window cleaning (inside & out)',
-      'Air freshener',
-    ],
-    featured: true,
-  },
-  {
-    name: 'Ultimate',
-    price: '$45',
-    time: '15 min',
-    features: [
-      'Everything in Premium',
-      'Ceramic sealant coating',
-      'Leather conditioning',
-      'Full interior detail wipe',
-      'Engine bay rinse',
-      'Rain-repellent windshield treatment',
-    ],
-  },
+const services = [
+  { icon: '🚿', title: 'Express Wash', desc: 'A quick exterior wash with premium foam, high-pressure rinse, and spot-free drying. In and out in under 15 minutes with a showroom-quality shine every time.', img: 'https://picsum.photos/seed/express-wash/600/400' },
+  { icon: '✨', title: 'Deluxe Hand Wash', desc: 'Meticulous hand washing using the two-bucket method to prevent swirl marks. Includes wheel cleaning, tire dressing, and chrome polishing for that extra pop.', img: 'https://picsum.photos/seed/hand-wash/600/400' },
+  { icon: '🛡️', title: 'Ceramic Coating', desc: 'Professional-grade ceramic coating application that bonds to your paint, creating a hydrophobic barrier lasting up to 3 years. Protection against UV, scratches, and chemicals.', img: 'https://picsum.photos/seed/ceramic-coat/600/400' },
+  { icon: '🧹', title: 'Interior Detailing', desc: 'Complete interior overhaul including vacuuming, steam cleaning, leather conditioning, dashboard treatment, and glass cleaning. We reach every crevice and crease.', img: 'https://picsum.photos/seed/interior-detail/600/400' },
+  { icon: '🔧', title: 'Paint Correction', desc: 'Multi-stage paint correction removes scratches, swirl marks, oxidation, and water spots. Machine polishing restores depth and clarity to your vehicle finish.', img: 'https://picsum.photos/seed/paint-correct/600/400' },
+  { icon: '🏍️', title: 'Motorcycle & Boat', desc: 'Specialized cleaning for motorcycles, boats, jet skis, and RVs. We understand the unique materials and finishes on recreational vehicles and treat them with expert care.', img: 'https://picsum.photos/seed/boat-wash/600/400' },
 ];
 
-const ADDONS = [
-  { name: 'Engine Bay Cleaning', price: '$15', icon: '🔧' },
-  { name: 'Leather Seat Conditioning', price: '$12', icon: '💺' },
-  { name: 'Pet Hair Removal', price: '$10', icon: '🐾' },
-  { name: 'Headlight Restoration', price: '$20', icon: '💡' },
-  { name: 'Odor Elimination Treatment', price: '$8', icon: '🌿' },
-  { name: 'Ceramic Spray Boost', price: '$10', icon: '✨' },
-  { name: 'Floor Mat Deep Clean', price: '$6', icon: '🧹' },
-  { name: 'Rain-Repellent Glass Coating', price: '$15', icon: '🌧️' },
+const packages = [
+  { name: 'Quick Shine', price: '$25', period: 'per wash', features: ['Exterior foam wash', 'High-pressure rinse', 'Spot-free air dry', 'Tire shine', '15-minute service'], highlight: false },
+  { name: 'Full Detail', price: '$89', period: 'per detail', features: ['Hand wash & clay bar', 'One-step polish', 'Interior vacuum & wipe', 'Window cleaning', 'Tire & wheel detail', 'Air freshener', '60-minute service'], highlight: true, badge: 'Most Popular' },
+  { name: 'Ultimate PPF', price: '$299', period: 'per package', features: ['Full paint correction', 'Ceramic coating application', 'Interior deep steam', 'Leather conditioning', 'Engine bay clean', '6-month protection guarantee'], highlight: false },
 ];
 
-const PLANS = [
-  {
-    name: 'Basic',
-    price: '$19.99',
-    period: '/mo',
-    washes: 'Unlimited Basic Washes',
-    perks: ['Free self-serve vacuums', 'Member fast lane'],
-  },
-  {
-    name: 'Premium',
-    price: '$29.99',
-    period: '/mo',
-    washes: 'Unlimited Deluxe Washes',
-    popular: true,
-    perks: [
-      'Free self-serve vacuums',
-      'Member fast lane',
-      '10% off all add-ons',
-      'Birthday month free upgrade',
-    ],
-  },
-  {
-    name: 'Elite',
-    price: '$39.99',
-    period: '/mo',
-    washes: 'Unlimited Premium Washes',
-    perks: [
-      'Free self-serve vacuums',
-      'Priority fast lane',
-      '20% off all add-ons',
-      'Free quarterly ceramic boost',
-      'One free interior detail / year',
-    ],
-  },
+const gallery = [
+  'https://picsum.photos/seed/car-red/500/350',
+  'https://picsum.photos/seed/car-black/500/350',
+  'https://picsum.photos/seed/car-white/500/350',
+  'https://picsum.photos/seed/car-blue/500/350',
+  'https://picsum.photos/seed/car-silver/500/350',
+  'https://picsum.photos/seed/suv-clean/500/350',
 ];
 
 const testimonials = [
-  {
-    quote:
-      'I have tried half a dozen car washes in Phoenix and ShineZone is hands down the fastest and cleanest. The Elite membership pays for itself by the second week. My car looks showroom fresh every time.',
-    name: 'Marcus Thompson',
-    location: 'Downtown Phoenix, AZ',
-    rating: 5,
-  },
-  {
-    quote:
-      'My SUV looks better than when I bought it. The ceramic sealant keeps the desert dust from sticking — I only need a rinse between full washes. The free vacuums are a lifesaver with two kids.',
-    name: 'Priya Krishnan',
-    location: 'Scottsdale, AZ',
-    rating: 5,
-  },
-  {
-    quote:
-      'Super convenient, super fast. I pull in on my way to work, get the Deluxe, and I am out in five minutes. The membership fast lane means zero wait. Best car wash in the Valley, period.',
-    name: 'Daniel Reeves',
-    location: 'Tempe, AZ',
-    rating: 5,
-  },
+  { name: 'Mike Thompson', text: 'My Tesla has never looked this good. The ceramic coating was applied perfectly and six months later it still beads water like day one. True craftsmanship.', avatar: 'https://picsum.photos/seed/avatar-mike/80/80' },
+  { name: 'Rachel Adams', text: 'I brought in my SUV after a road trip covered in bugs and mud. They spent two hours on it and it literally looked better than when I drove it off the lot. Incredible attention to detail.', avatar: 'https://picsum.photos/seed/avatar-rachel/80/80' },
+  { name: 'Carlos Rivera', text: 'As a car collector, I need detailers I can trust with rare paint. ShineOn is the only shop I trust with my 1967 Mustang. They treat every car like it belongs in a museum.', avatar: 'https://picsum.photos/seed/avatar-carlos/80/80' },
 ];
 
-const FAQS = [
-  {
-    q: 'How long does each wash take?',
-    a: 'Our Basic wash averages about 3 minutes, Deluxe takes around 5 minutes, Premium is 8 minutes, and the full Ultimate detail runs about 15 minutes. Even during peak hours, our dual-bay conveyor keeps wait times under 5 minutes.',
-  },
-  {
-    q: 'What is included in unlimited membership plans?',
-    a: 'Every plan gives you unlimited washes at your chosen tier, free self-serve vacuums, and access to our dedicated member fast lane. Higher tiers also bundle discounts on add-ons and complimentary upgrades.',
-  },
-  {
-    q: 'Can I use my membership at multiple locations?',
-    a: 'Yes. All ShineZone memberships are valid at every Phoenix-metro location. Your license plate is tied to your account, so just drive up — our system recognizes you automatically.',
-  },
-  {
-    q: 'Are your products eco-friendly?',
-    a: 'Absolutely. We reclaim and filter over 80 percent of the water we use, and every soap and sealant in our lineup is biodegradable and phosphate-free. Our conveyors are solar-powered at two of three locations.',
-  },
-  {
-    q: 'Do you accept credit cards and mobile payments?',
-    a: 'We accept all major credit and debit cards, Apple Pay, Google Pay, and Samsung Pay. Memberships are billed monthly to your card on file and can be paused or cancelled anytime from your online account.',
-  },
-  {
-    q: 'What happens if I am not satisfied with my wash?',
-    a: 'We offer a 24-hour rewash guarantee. If anything is not up to your standard, just come back within 24 hours and we will rewash your vehicle at no extra charge. No questions asked.',
-  },
+const stats = [
+  { number: '45K+', label: 'Cars Washed' },
+  { number: '99%', label: 'Happy Customers' },
+  { number: '8', label: 'Service Bays' },
+  { number: '10', label: 'Years Serving' },
 ];
 
-export default function Home() {
+const beforeAfter = [
+  { before: 'https://picsum.photos/seed/dirty-car1/400/300', after: 'https://picsum.photos/seed/clean-car1/400/300', label: 'SUV Full Detail' },
+  { before: 'https://picsum.photos/seed/dirty-car2/400/300', after: 'https://picsum.photos/seed/clean-car2/400/300', label: 'Sedan Paint Correction' },
+  { before: 'https://picsum.photos/seed/dirty-car3/400/300', after: 'https://picsum.photos/seed/clean-car3/400/300', label: 'Interior Restoration' },
+];
+
+export default function HomePage() {
+  const [formData, setFormData] = useState({ name: '', phone: '', vehicle: '', service: '', date: '', time: '' });
   const [submitted, setSubmitted] = useState(false);
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentSlide((p) => (p + 1) % beforeAfter.length), 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 4000);
+  };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      {/* Skip link */}
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-[#0288d1] text-white px-4 py-2 rounded z-[100] font-bold"
-      >
-        Skip to content
-      </a>
-
-      {/* Navigation */}
-      <nav
-        role="navigation"
-        aria-label="Main navigation"
-        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
-      >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-xl font-extrabold text-[#0288d1] tracking-tight">
-              ShineZone
-            </h1>
-            <p className="text-[10px] tracking-[0.25em] text-gray-400 uppercase font-medium">
-              Car Wash — Phoenix
-            </p>
+    <div>
+      {/* NAV */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b" style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderColor: 'var(--border)' }}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+          <a href="#" className="flex items-center gap-2">
+            <span className="text-2xl">💧</span>
+            <span className="font-extrabold text-lg tracking-tight" style={{ color: 'var(--accent-dark)', fontFamily: "'Outfit', sans-serif" }}>ShineOn</span>
+          </a>
+          <div className="hidden md:flex items-center gap-7">
+            {['Services', 'Packages', 'Gallery', 'Reviews', 'Contact'].map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-semibold transition-colors" style={{ color: 'var(--body)', fontFamily: "'Outfit', sans-serif" }}
+                onMouseOver={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+                onMouseOut={(e) => (e.currentTarget.style.color = 'var(--body)')}>{item}</a>
+            ))}
           </div>
-          <div className="hidden md:flex items-center gap-6">
-            {['packages', 'addons', 'how', 'plans', 'gallery', 'testimonials'].map(
-              (id) => (
-                <button
-                  key={id}
-                  className="text-sm text-gray-500 hover:text-[#0288d1] transition-colors font-semibold uppercase tracking-wide"
-                  onClick={() => scrollTo(id)}
-                >
-                  {id === 'how'
-                    ? 'How It Works'
-                    : id === 'plans'
-                    ? 'Membership'
-                    : id.charAt(0).toUpperCase() + id.slice(1)}
-                </button>
-              )
-            )}
-            <button
-              className="bg-[#0288d1] text-white px-5 py-2.5 text-sm font-bold rounded-full hover:bg-[#0277bd] transition-colors shadow-lg shadow-[#0288d1]/20"
-              onClick={() => scrollTo('contact')}
-            >
-              Get Washed
-            </button>
-          </div>
+          <a href="#contact" className="hidden md:inline-block px-5 py-2.5 rounded-lg text-white text-sm font-bold" style={{ background: 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>Book a Wash</a>
+          <button onClick={() => setMobileMenu(!mobileMenu)} className="md:hidden text-2xl" style={{ color: 'var(--heading)' }}>☰</button>
         </div>
+        {mobileMenu && (
+          <div className="md:hidden bg-white border-t px-6 py-4 flex flex-col gap-3" style={{ borderColor: 'var(--border)' }}>
+            {['Services', 'Packages', 'Gallery', 'Reviews', 'Contact'].map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenu(false)} className="text-sm font-semibold py-2" style={{ color: 'var(--heading)' }}>{item}</a>
+            ))}
+          </div>
+        )}
       </nav>
 
-      <main id="main" role="main">
-        {/* ============ HERO ============ */}
-        <section className="pt-24 bg-gradient-to-br from-[#e1f5fe] via-white to-[#f0f9ff] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#0288d1]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
-          <div className="max-w-6xl mx-auto px-6 py-16 md:py-24 relative">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-4">
-                  Eco-Friendly — Free Vacuums — Est. 2017
-                </p>
-                <h2 className="heading text-5xl md:text-7xl font-black uppercase leading-[0.9] mb-6 text-gray-900">
-                  Drive clean,{' '}
-                  <span className="text-[#0288d1]">every time.</span>
-                </h2>
-                <p className="text-lg text-gray-600 max-w-lg mb-8 font-['Work_Sans'] leading-relaxed">
-                  ShineZone delivers a showroom-quality wash in minutes. Free
-                  vacuums at every bay, monthly unlimited plans, and eco-friendly
-                  soaps safe for every finish. Whether you commute across the
-                  Valley or just want your weekend ride to shine, we have you
-                  covered — 365 days a year.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <button
-                    className="bg-[#0288d1] text-white px-8 py-4 text-base font-bold rounded-full hover:bg-[#0277bd] transition-all shadow-xl shadow-[#0288d1]/25 hover:shadow-2xl hover:shadow-[#0288d1]/30 hover:-translate-y-0.5"
-                    onClick={() => scrollTo('plans')}
-                  >
-                    Monthly Plans
-                  </button>
-                  <button
-                    className="border-2 border-[#0288d1] text-[#0288d1] px-8 py-4 text-base font-bold rounded-full hover:bg-[#0288d1] hover:text-white transition-all"
-                    onClick={() => scrollTo('packages')}
-                  >
-                    Single Wash
-                  </button>
-                </div>
-              </div>
-              <div className="relative">
-                <div className="rounded-2xl overflow-hidden shadow-2xl shadow-[#0288d1]/15 border-4 border-white">
-                  <img
-                    src={IMAGES.hero}
-                    alt="Clean car after professional wash at ShineZone"
-                    className="w-full h-[400px] object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg px-5 py-3 border border-gray-100">
-                  <div className="text-2xl font-black text-[#0288d1]">50K+</div>
-                  <div className="text-xs text-gray-500 font-semibold uppercase tracking-wide">
-                    Cars Washed
-                  </div>
-                </div>
+      {/* HERO */}
+      <header className="pt-28 pb-20 md:pt-36 md:pb-28" style={{ background: 'linear-gradient(160deg, #f0f9ff 0%, #e0f2fe 30%, #ffffff 100%)' }}>
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+          <div className="reveal">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-6" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)', fontFamily: "'Outfit', sans-serif" }}>
+              ⚡ Premium Auto Detailing
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-[3.7rem] font-black leading-[1.1] mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)', letterSpacing: '-0.04em' }}>
+              Your Car Deserves the <span style={{ color: 'var(--accent)' }}>Ultimate Shine</span>
+            </h1>
+            <p className="text-base leading-relaxed mb-8" style={{ color: 'var(--body)', maxWidth: 480, fontFamily: "'Work Sans', sans-serif" }}>
+              ShineOn Auto Spa delivers premium car washing, detailing, and protection services. From a quick express wash to full ceramic coating, we treat every vehicle with the precision and care it deserves. Our state-of-the-art facility uses purified water systems, pH-balanced soaps, and microfiber-safe techniques to protect your investment. Whether you drive a daily commuter or a six-figure exotic, you will leave with a finish that turns heads.
+            </p>
+            <div className="flex flex-wrap gap-4 mb-8">
+              <a href="#contact" className="px-8 py-3 rounded-lg text-white font-bold shadow-lg transition-transform hover:-translate-y-1" style={{ background: 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>Book Your Wash</a>
+              <a href="#packages" className="px-8 py-3 rounded-lg font-bold border-2 transition-transform hover:-translate-y-1" style={{ borderColor: 'var(--accent)', color: 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>View Packages</a>
+            </div>
+            <div className="flex gap-6 text-xs font-bold" style={{ color: 'var(--body)', fontFamily: "'Outfit', sans-serif" }}>
+              <span>🛡️ Insured</span>
+              <span>🌿 Eco-Friendly</span>
+              <span>⏱️ Fast Service</span>
+            </div>
+          </div>
+          <div className="reveal" style={{ transitionDelay: '0.2s' }}>
+            <div className="relative">
+              <img src="https://picsum.photos/seed/car-hero2/700/480" alt="Premium car wash in action" className="rounded-2xl shadow-2xl w-full object-cover" style={{ maxHeight: 460 }} />
+              <div className="absolute -bottom-4 -left-4 bg-white rounded-xl p-4 shadow-lg">
+                <div className="text-2xl font-black" style={{ color: 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>45K+</div>
+                <div className="text-xs font-semibold" style={{ color: 'var(--body)' }}>Cars Detailed</div>
               </div>
             </div>
           </div>
-          {/* Wave separator */}
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1440 60" fill="none" className="w-full">
-              <path
-                d="M0 30C240 60 480 0 720 30C960 60 1200 0 1440 30V60H0V30Z"
-                fill="white"
-              />
-            </svg>
-          </div>
-        </section>
+        </div>
+      </header>
 
-        {/* ============ STATS BAR ============ */}
-        <section className="py-10 bg-white border-b border-gray-100">
-          <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { value: '3 min', label: 'Avg Wash Time' },
-              { value: '50K+', label: 'Cars Washed' },
-              { value: '80%', label: 'Water Reclaimed' },
-              { value: '3', label: 'Valley Locations' },
-            ].map((stat, i) => (
-              <div key={i}>
-                <div className="text-3xl font-black text-[#0288d1]">
-                  {stat.value}
-                </div>
-                <div className="text-xs text-gray-400 uppercase font-semibold tracking-wider mt-1">
-                  {stat.label}
+      {/* STATS */}
+      <section className="py-8" style={{ background: 'var(--accent)', color: 'white' }}>
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {stats.map((s, i) => (
+            <div key={i} className="reveal">
+              <div className="text-3xl md:text-4xl font-black" style={{ fontFamily: "'Outfit', sans-serif" }}>{s.number}</div>
+              <div className="text-xs font-semibold mt-1 opacity-80 uppercase tracking-wider">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" className="py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)' }}>What We Do</div>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>Expert Auto Care Services</h2>
+            <p style={{ color: 'var(--body)', maxWidth: 600, margin: '0 auto' }}>Every vehicle that enters our bay receives meticulous attention. We have invested in the best equipment, the finest products, and the most knowledgeable technicians in the region. Our service menu covers everything from a quick rinse to full paint restoration and ceramic protection.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((svc, i) => (
+              <div key={i} className="reveal rounded-2xl overflow-hidden border transition-all hover:shadow-xl hover:-translate-y-2 bg-white" style={{ borderColor: 'var(--border)', transitionDelay: `${i * 0.08}s` }}>
+                <img src={svc.img} alt={svc.title} className="w-full h-44 object-cover" />
+                <div className="p-6">
+                  <span className="text-3xl mb-3 block">{svc.icon}</span>
+                  <h3 className="text-lg font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>{svc.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--body)', fontFamily: "'Work Sans', sans-serif" }}>{svc.desc}</p>
                 </div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ============ WASH PACKAGES ============ */}
-        <section
-          id="packages"
-          className="py-24 bg-white"
-          aria-labelledby="packages-heading"
-        >
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                Our Wash Menu
-              </p>
-              <h2
-                id="packages-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase text-gray-900"
-              >
-                Wash Packages
-              </h2>
-              <p className="text-gray-500 mt-4 max-w-lg mx-auto font-['Work_Sans']">
-                From a quick express rinse to a full interior-and-exterior detail,
-                every package uses pH-balanced soaps and spot-free rinse water.
-                Choose the tier that fits your drive.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {PACKAGES.map((pkg, i) => (
-                <div
-                  key={i}
-                  className={`card bg-white rounded-2xl border-2 p-8 transition-all hover:-translate-y-1 hover:shadow-xl ${
-                    pkg.featured
-                      ? 'border-[#0288d1] shadow-lg shadow-[#0288d1]/10 ring-2 ring-[#0288d1]/20'
-                      : 'border-gray-100 hover:border-[#0288d1]/30'
-                  }`}
-                >
-                  {pkg.featured && (
-                    <div className="bg-[#0288d1] text-white text-[10px] font-bold uppercase tracking-wider mb-4 px-3 py-1 rounded-full inline-block">
-                      Most Popular
-                    </div>
-                  )}
-                  <h3 className="text-xl font-black uppercase text-gray-900 mb-1">
-                    {pkg.name}
-                  </h3>
-                  <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-4xl font-black text-[#0288d1]">
-                      {pkg.price}
-                    </span>
-                  </div>
-                  <div className="text-gray-400 text-sm mb-6 font-['Work_Sans']">
-                    ~{pkg.time} avg
-                  </div>
-                  <ul className="space-y-3">
-                    {pkg.features.map((f, j) => (
-                      <li
-                        key={j}
-                        className="text-sm text-gray-600 flex items-start gap-2 font-['Work_Sans']"
-                      >
-                        <span className="text-[#0288d1] mt-0.5 font-bold">✓</span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    className={`mt-6 w-full py-3 rounded-full font-bold text-sm transition-all ${
-                      pkg.featured
-                        ? 'bg-[#0288d1] text-white hover:bg-[#0277bd] shadow-lg shadow-[#0288d1]/20'
-                        : 'bg-[#e1f5fe] text-[#0288d1] hover:bg-[#0288d1] hover:text-white'
-                    }`}
-                  >
-                    Select Package
-                  </button>
-                </div>
-              ))}
-            </div>
+      {/* PACKAGES */}
+      <section id="packages" className="py-20 md:py-28" style={{ background: 'var(--alt-bg)' }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)' }}>Pricing</div>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>Choose Your Wash Package</h2>
+            <p style={{ color: 'var(--body)', maxWidth: 550, margin: '0 auto' }}>Straightforward pricing with no hidden add-ons. Every package includes free vacuums for self-service and a satisfaction guarantee. Monthly memberships available for unlimited washes at discounted rates.</p>
           </div>
-        </section>
-
-        {/* ============ ADD-ON SERVICES ============ */}
-        <section
-          id="addons"
-          className="py-24 bg-[#f0f9ff]"
-          aria-labelledby="addons-heading"
-        >
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                Customize Your Wash
-              </p>
-              <h2
-                id="addons-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase text-gray-900"
-              >
-                Add-On Services
-              </h2>
-              <p className="text-gray-500 mt-4 max-w-lg mx-auto font-['Work_Sans']">
-                Stack any add-on to your wash package for extra protection and
-                interior freshness. Ask a team member or select them at the pay
-                station.
-              </p>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {ADDONS.map((addon, i) => (
-                <div
-                  key={i}
-                  className="bg-white flex flex-col items-center text-center border border-gray-100 rounded-xl px-5 py-6 hover:border-[#0288d1]/30 hover:shadow-lg transition-all hover:-translate-y-0.5"
-                >
-                  <div className="text-3xl mb-3">{addon.icon}</div>
-                  <span className="text-gray-700 font-semibold text-sm mb-2 font-['Work_Sans']">
-                    {addon.name}
-                  </span>
-                  <span className="text-[#0288d1] font-black text-lg">
-                    {addon.price}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============ HOW IT WORKS (3 STEPS) ============ */}
-        <section
-          id="how"
-          className="py-24 bg-white"
-          aria-labelledby="how-heading"
-        >
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                Three Easy Steps
-              </p>
-              <h2
-                id="how-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase text-gray-900"
-              >
-                How It Works
-              </h2>
-              <p className="text-gray-500 mt-4 max-w-lg mx-auto font-['Work_Sans']">
-                Getting your car cleaned at ShineZone is as easy as drive, choose,
-                and roll out. No appointments needed — just show up.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 relative">
-              {/* Connector line */}
-              <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-0.5 bg-gradient-to-r from-[#0288d1]/20 via-[#0288d1]/40 to-[#0288d1]/20" />
-              {[
-                {
-                  step: '01',
-                  title: 'Drive Up',
-                  desc: 'Pull into any ShineZone bay. Our license-plate recognition identifies members automatically, so you skip the pay kiosk and head straight into the wash tunnel.',
-                  icon: '🚗',
-                },
-                {
-                  step: '02',
-                  title: 'Choose Your Wash',
-                  desc: 'Select a package on the touchscreen or stay on your selected plan. Want extras like leather conditioning or ceramic boost? Tap to add them before the cycle starts.',
-                  icon: '📱',
-                },
-                {
-                  step: '03',
-                  title: 'Roll Out Clean',
-                  desc: 'Exit the tunnel in minutes with a spotless finish. Pull into a free vacuum station to clean your interior at your own pace — no time limits, no extra cost.',
-                  icon: '✨',
-                },
-              ].map((s, i) => (
-                <div
-                  key={i}
-                  className="text-center bg-[#f0f9ff] rounded-2xl p-8 border border-gray-100 relative hover:border-[#0288d1]/30 transition-all"
-                >
-                  <div className="w-16 h-16 bg-[#0288d1] rounded-full flex items-center justify-center text-white text-2xl font-black mx-auto mb-4 shadow-lg shadow-[#0288d1]/25 relative z-10">
-                    {s.step}
-                  </div>
-                  <div className="text-4xl mb-3">{s.icon}</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 font-['Outfit']">
-                    {s.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed font-['Work_Sans']">
-                    {s.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============ GALLERY ============ */}
-        <section
-          id="gallery"
-          className="py-24 bg-[#f0f9ff]"
-          aria-labelledby="gallery-heading"
-        >
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                See The Shine
-              </p>
-              <h2
-                id="gallery-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase text-gray-900"
-              >
-                Our Work
-              </h2>
-              <p className="text-gray-500 mt-4 max-w-lg mx-auto font-['Work_Sans']">
-                Every car that rolls out of ShineZone leaves with a mirror-like
-                finish. Browse some of our recent washes and details.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { src: IMAGES.gallery1, alt: 'Spotless sedan after ShineZone Premium wash' },
-                { src: IMAGES.gallery2, alt: 'Detailed SUV with ceramic coating and tire shine' },
-                { src: IMAGES.gallery3, alt: 'Sports car with gleaming paint after Ultimate detail' },
-                { src: IMAGES.gallery4, alt: 'Clean vehicle interior after vacuum and wipe service' },
-              ].map((img, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl overflow-hidden border-2 border-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group"
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============ MEMBERSHIP PLANS ============ */}
-        <section
-          id="plans"
-          className="py-24 bg-white"
-          aria-labelledby="plans-heading"
-        >
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                Save Every Month
-              </p>
-              <h2
-                id="plans-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase text-gray-900"
-              >
-                Monthly Unlimited Plans
-              </h2>
-              <p className="text-gray-500 mt-4 max-w-lg mx-auto font-['Work_Sans']">
-                Wash as often as you want — every day if you like. All plans
-                include free self-serve vacuums and a dedicated member fast lane.
-                Cancel or pause anytime.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              {PLANS.map((p, i) => (
-                <div
-                  key={i}
-                  className={`rounded-2xl border-2 p-8 text-center transition-all hover:-translate-y-1 ${
-                    p.popular
-                      ? 'border-[#0288d1] bg-gradient-to-b from-[#e1f5fe] to-white shadow-xl shadow-[#0288d1]/10 ring-2 ring-[#0288d1]/20 relative'
-                      : 'border-gray-100 bg-white hover:border-[#0288d1]/30 hover:shadow-xl'
-                  }`}
-                >
-                  {p.popular && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0288d1] text-white text-[10px] font-bold uppercase tracking-wider px-4 py-1 rounded-full shadow-lg">
-                      Best Value
-                    </div>
-                  )}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 mt-2">
-                    {p.name}
-                  </h3>
-                  <div className="flex items-baseline justify-center gap-1 mb-1">
-                    <span className="text-4xl font-black text-[#0288d1]">
-                      {p.price}
-                    </span>
-                    <span className="text-gray-400 font-semibold">
-                      {p.period}
-                    </span>
-                  </div>
-                  <p className="text-gray-500 text-sm mb-6 font-['Work_Sans'] font-medium">
-                    {p.washes}
-                  </p>
-                  <ul className="space-y-3 text-left mb-8">
-                    {p.perks.map((perk, j) => (
-                      <li
-                        key={j}
-                        className="text-sm text-gray-600 flex items-start gap-2 font-['Work_Sans']"
-                      >
-                        <span className="text-[#0288d1] mt-0.5 font-bold">✓</span>
-                        {perk}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    className={`w-full py-3.5 rounded-full font-bold text-sm transition-all ${
-                      p.popular
-                        ? 'bg-[#0288d1] text-white hover:bg-[#0277bd] shadow-lg shadow-[#0288d1]/20'
-                        : 'bg-[#e1f5fe] text-[#0288d1] hover:bg-[#0288d1] hover:text-white'
-                    }`}
-                  >
-                    Sign Up Now
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============ TESTIMONIALS ============ */}
-        <section
-          id="testimonials"
-          className="py-24 bg-[#f0f9ff]"
-          aria-labelledby="testimonials-heading"
-        >
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                What Drivers Say
-              </p>
-              <h2
-                id="testimonials-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase text-gray-900"
-              >
-                Testimonials
-              </h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((t, i) => (
-                <div
-                  key={i}
-                  className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-all hover:-translate-y-0.5"
-                >
-                  <div className="text-yellow-400 mb-3 text-lg">
-                    {'★'.repeat(t.rating)}
-                  </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 font-['Work_Sans'] italic">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div className="border-t border-gray-100 pt-4">
-                    <div className="font-bold text-gray-900">{t.name}</div>
-                    <div className="text-[#0288d1] text-xs font-semibold">
-                      {t.location}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============ FAQ ============ */}
-        <section
-          className="py-24 bg-white"
-          aria-labelledby="faq-heading"
-        >
-          <div className="max-w-3xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <p className="text-[#0288d1] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                Common Questions
-              </p>
-              <h2
-                id="faq-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase text-gray-900"
-              >
-                FAQ
-              </h2>
-            </div>
-            <div className="space-y-4">
-              {FAQS.map((faq, i) => (
-                <details
-                  key={i}
-                  className="group border border-gray-200 rounded-xl px-6 cursor-pointer hover:border-[#0288d1]/30 transition-colors"
-                >
-                  <summary className="font-bold flex justify-between items-center list-none py-5 text-gray-900 font-['Outfit']">
-                    {faq.q}
-                    <span className="text-[#0288d1] text-2xl group-open:rotate-45 transition-transform ml-4 flex-shrink-0">
-                      +
-                    </span>
-                  </summary>
-                  <p className="pb-5 text-gray-500 leading-relaxed font-['Work_Sans']">
-                    {faq.a}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============ LOCATION & HOURS ============ */}
-        <section
-          id="contact"
-          className="py-24 bg-gradient-to-br from-[#0288d1] to-[#01579b] text-white"
-          aria-labelledby="contact-heading"
-        >
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <p className="text-[#b3e5fc] text-xs font-bold tracking-[0.3em] uppercase mb-2">
-                Get In Touch
-              </p>
-              <h2
-                id="contact-heading"
-                className="heading text-4xl md:text-5xl font-black uppercase"
-              >
-                Contact & Locations
-              </h2>
-              <p className="text-[#b3e5fc] mt-4 max-w-lg mx-auto font-['Work_Sans']">
-                Three locations across the Phoenix metro area, open 7 AM to 9 PM
-                every day of the year. Call, click, or just drive in.
-              </p>
-            </div>
-
-            {/* Locations */}
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-              {[
-                {
-                  name: 'Downtown Phoenix',
-                  addr: '1200 Speedway Blvd',
-                  city: 'Phoenix, AZ 85001',
-                },
-                {
-                  name: 'Scottsdale',
-                  addr: '7340 E McDowell Rd',
-                  city: 'Scottsdale, AZ 85257',
-                },
-                {
-                  name: 'Tempe',
-                  addr: '1940 E Apache Blvd',
-                  city: 'Tempe, AZ 85281',
-                },
-              ].map((loc, i) => (
-                <div
-                  key={i}
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-8 text-center hover:bg-white/15 transition-colors"
-                >
-                  <div className="text-3xl mb-3">📍</div>
-                  <div className="font-bold text-lg mb-1">{loc.name}</div>
-                  <p className="text-[#b3e5fc] text-sm font-['Work_Sans']">
-                    {loc.addr}
-                    <br />
-                    {loc.city}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Hours / Phone / Email */}
-            <div className="grid sm:grid-cols-3 gap-6 text-center mb-12">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6">
-                <div className="text-2xl mb-2">⏰</div>
-                <div className="font-bold">Hours</div>
-                <p className="text-[#b3e5fc] text-sm font-['Work_Sans']">
-                  Daily 7 AM – 9 PM
-                  <br />
-                  365 days a year
-                </p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6">
-                <div className="text-2xl mb-2">📞</div>
-                <div className="font-bold">Call Us</div>
-                <a
-                  href="tel:(555) 012-3456"
-                  className="text-[#b3e5fc] hover:text-white transition-colors font-['Work_Sans']"
-                >
-                  (555) 012-3456
+          <div className="grid md:grid-cols-3 gap-8">
+            {packages.map((pkg, i) => (
+              <div key={i} className={`reveal rounded-2xl p-8 bg-white border-2 relative transition-all hover:shadow-xl hover:-translate-y-2 ${pkg.highlight ? 'shadow-xl' : ''}`} style={{ borderColor: pkg.highlight ? 'var(--accent)' : 'var(--border)', transitionDelay: `${i * 0.1}s` }}>
+                {pkg.badge && <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white" style={{ background: 'var(--accent)' }}>{pkg.badge}</span>}
+                <h3 className="text-xl font-black mb-1" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>{pkg.name}</h3>
+                <div className="mb-4"><span className="text-4xl font-black" style={{ color: 'var(--accent)' }}>{pkg.price}</span><span className="text-xs font-semibold ml-1" style={{ color: 'var(--body)' }}>{pkg.period}</span></div>
+                <ul className="space-y-3 mb-8">
+                  {pkg.features.map((f, j) => (
+                    <li key={j} className="flex items-start gap-2 text-sm" style={{ color: 'var(--body)', fontFamily: "'Work Sans', sans-serif" }}>
+                      <span className="font-bold" style={{ color: 'var(--accent)' }}>✓</span>{f}
+                    </li>
+                  ))}
+                </ul>
+                <a href="#contact" className={`block text-center py-3 rounded-lg font-bold text-sm transition-all ${pkg.highlight ? 'text-white' : ''}`} style={{ background: pkg.highlight ? 'var(--accent)' : 'white', border: pkg.highlight ? 'none' : '2px solid var(--accent)', color: pkg.highlight ? 'white' : 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>
+                  Select Package
                 </a>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-6">
-                <div className="text-2xl mb-2">✉️</div>
-                <div className="font-bold">Email</div>
-                <a
-                  href="mailto:hello@shinezone.com"
-                  className="text-[#b3e5fc] hover:text-white transition-colors font-['Work_Sans']"
-                >
-                  hello@shinezone.com
-                </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BEFORE/AFTER SLIDER */}
+      <section className="py-20 md:py-28">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12 reveal">
+            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)' }}>Results</div>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>Before & After Transformations</h2>
+            <p style={{ color: 'var(--body)', maxWidth: 500, margin: '0 auto' }}>See the dramatic difference our detailing services make. These unretouched photos show real vehicles after a single visit to ShineOn Auto Spa.</p>
+          </div>
+          <div className="reveal rounded-2xl overflow-hidden shadow-xl" style={{ background: 'var(--alt-bg)' }}>
+            <div className="grid md:grid-cols-2">
+              <div className="relative">
+                <img src={beforeAfter[currentSlide].before} alt="Before" className="w-full h-64 md:h-80 object-cover" />
+                <span className="absolute top-4 left-4 px-3 py-1 rounded-lg text-xs font-bold text-white" style={{ background: 'rgba(0,0,0,0.6)' }}>BEFORE</span>
+              </div>
+              <div className="relative">
+                <img src={beforeAfter[currentSlide].after} alt="After" className="w-full h-64 md:h-80 object-cover" />
+                <span className="absolute top-4 left-4 px-3 py-1 rounded-lg text-xs font-bold text-white" style={{ background: 'var(--accent)' }}>AFTER</span>
               </div>
             </div>
-
-            {/* Contact Form */}
-            <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-black uppercase mb-2">
-                  Send Us a Message
-                </h3>
-                <p className="text-[#b3e5fc] text-sm font-['Work_Sans']">
-                  Have a question or special request? Fill out the form and we will
-                  get back to you within 24 hours.
-                </p>
+            <div className="p-4 text-center">
+              <p className="text-sm font-bold mb-3" style={{ color: 'var(--heading)', fontFamily: "'Outfit', sans-serif" }}>{beforeAfter[currentSlide].label}</p>
+              <div className="flex justify-center gap-2">
+                {beforeAfter.map((_, i) => (
+                  <button key={i} onClick={() => setCurrentSlide(i)} className="w-3 h-3 rounded-full transition-all" style={{ background: i === currentSlide ? 'var(--accent)' : 'var(--border)' }} />
+                ))}
               </div>
-              {submitted ? (
-                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-12 text-center">
-                  <div className="text-4xl mb-4">✓</div>
-                  <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-                  <p className="text-[#b3e5fc]">
-                    We will respond to your inquiry within 24 hours.
-                  </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="mt-6 text-[#b3e5fc] hover:text-white underline transition-colors"
-                  >
-                    Send another message
-                  </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* GALLERY */}
+      <section id="gallery" className="py-20 md:py-28" style={{ background: 'var(--alt-bg)' }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)' }}>Gallery</div>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>Recent Work</h2>
+            <p style={{ color: 'var(--body)', maxWidth: 500, margin: '0 auto' }}>A showcase of recently completed details and washes. From daily drivers to weekend warriors, we bring out the best in every vehicle that visits our facility.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {gallery.map((src, i) => (
+              <div key={i} className="reveal overflow-hidden rounded-xl group cursor-pointer" style={{ transitionDelay: `${i * 0.06}s` }}>
+                <img src={src} alt={`Gallery ${i + 1}`} className="w-full h-44 md:h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY US */}
+      <section className="py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+          <div className="reveal">
+            <img src="https://picsum.photos/seed/car-detailer/600/500" alt="Our professional detailing team" className="rounded-2xl shadow-xl w-full object-cover" style={{ maxHeight: 480 }} />
+          </div>
+          <div className="reveal" style={{ transitionDelay: '0.15s' }}>
+            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)' }}>Why ShineOn</div>
+            <h2 className="text-3xl md:text-4xl font-black mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>Built by Car Enthusiasts, for Car Enthusiasts</h2>
+            <p className="mb-6 leading-relaxed" style={{ color: 'var(--body)', fontFamily: "'Work Sans', sans-serif" }}>ShineOn was started by two lifelong car enthusiasts who were frustrated with the lack of quality auto care in the area. We have since grown to a team of 25 certified detailers, but our philosophy remains the same: treat every car as if it were our own. We use only professional-grade products from brands like Meguiars, Chemical Guys, and Gtechniq, and every member of our team completes a 200-hour training program.</p>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: '💧', label: 'Purified Water System' },
+                { icon: '🧪', label: 'pH-Balanced Soaps' },
+                { icon: '🔧', label: 'Certified Technicians' },
+                { icon: '♻️', label: 'Water Recycling' },
+                { icon: '📸', label: 'Photo Documentation' },
+                { icon: '🕐', label: 'Same-Day Service' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-2 p-3 rounded-lg" style={{ background: 'var(--alt-bg)' }}>
+                  <span className="text-lg">{item.icon}</span>
+                  <span className="text-sm font-semibold" style={{ color: 'var(--heading)', fontFamily: "'Outfit', sans-serif" }}>{item.label}</span>
                 </div>
-              ) : (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setSubmitted(true);
-                  }}
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-8 space-y-5"
-                >
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-sm mb-2 text-[#b3e5fc] font-semibold">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Your name"
-                        required
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:border-white focus:outline-none transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm mb-2 text-[#b3e5fc] font-semibold">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        placeholder="you@email.com"
-                        required
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:border-white focus:outline-none transition-colors"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-sm mb-2 text-[#b3e5fc] font-semibold">
-                        Phone
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="(555) 123-4567"
-                        className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:border-white focus:outline-none transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm mb-2 text-[#b3e5fc] font-semibold">
-                        Service Type
-                      </label>
-                      <select className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-white focus:outline-none transition-colors">
-                        <option value="" className="text-gray-900">
-                          Select a service
-                        </option>
-                        <option className="text-gray-900">Basic Wash</option>
-                        <option className="text-gray-900">Deluxe Wash</option>
-                        <option className="text-gray-900">Premium Wash</option>
-                        <option className="text-gray-900">Ultimate Wash</option>
-                        <option className="text-gray-900">Monthly Membership</option>
-                        <option className="text-gray-900">Fleet Services</option>
-                        <option className="text-gray-900">Other</option>
-                      </select>
-                    </div>
-                  </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section id="reviews" className="py-20 md:py-28" style={{ background: 'var(--alt-bg)' }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16 reveal">
+            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)' }}>Reviews</div>
+            <h2 className="text-3xl md:text-4xl font-black mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>What Drivers Are Saying</h2>
+            <p style={{ color: 'var(--body)', maxWidth: 500, margin: '0 auto' }}>Our reputation is built on thousands of five-star experiences. Here is what some of our loyal customers have to say about trusting ShineOn with their prized vehicles.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <div key={i} className="reveal rounded-2xl p-8 bg-white border transition-all hover:shadow-lg" style={{ borderColor: 'var(--border)', transitionDelay: `${i * 0.1}s` }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
                   <div>
-                    <label className="block text-sm mb-2 text-[#b3e5fc] font-semibold">
-                      Message
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Tell us how we can help..."
-                      required
-                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 focus:border-white focus:outline-none transition-colors resize-none"
-                    />
+                    <div className="font-bold text-sm" style={{ color: 'var(--heading)', fontFamily: "'Outfit', sans-serif" }}>{t.name}</div>
+                    <div className="text-xs" style={{ color: 'var(--accent)' }}>★★★★★</div>
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-white text-[#0288d1] py-4 rounded-lg font-bold text-lg hover:bg-[#e1f5fe] transition-colors shadow-lg"
-                  >
-                    Send Message
-                  </button>
-                </form>
-              )}
-            </div>
+                </div>
+                <p className="text-sm leading-relaxed italic" style={{ color: 'var(--body)', fontFamily: "'Work Sans', sans-serif" }}>&ldquo;{t.text}&rdquo;</p>
+              </div>
+            ))}
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      {/* ============ FOOTER ============ */}
-      <footer className="bg-[#0a1628] py-12">
+      {/* CTA */}
+      <section className="py-16" style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%)' }}>
+        <div className="max-w-4xl mx-auto px-6 text-center reveal">
+          <h2 className="text-3xl md:text-4xl font-black text-white mb-4" style={{ fontFamily: "'Outfit', sans-serif" }}>Ready for the Shine of a Lifetime?</h2>
+          <p className="text-white/85 mb-8 max-w-xl mx-auto">Book your first wash today and get 20% off any package. Open 7 days a week with drive-through and appointment options available. Your car will thank you.</p>
+          <a href="#contact" className="inline-block px-8 py-3 rounded-lg font-bold bg-white transition-transform hover:-translate-y-1" style={{ color: 'var(--accent-dark)', fontFamily: "'Outfit', sans-serif" }}>Claim 20% Off First Wash</a>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" className="py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-start">
+          <div className="reveal">
+            <div className="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4" style={{ background: 'rgba(2,136,209,0.08)', color: 'var(--accent-dark)' }}>Book Now</div>
+            <h2 className="text-3xl md:text-4xl font-black mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>Schedule Your Appointment</h2>
+            <p className="mb-6 leading-relaxed" style={{ color: 'var(--body)', fontFamily: "'Work Sans', sans-serif" }}>Select your preferred service, date, and time. We will confirm your appointment within minutes. Walk-ins are also welcome, but appointments guarantee zero wait time. Fleet and commercial accounts welcome with volume discounts.</p>
+            <div className="space-y-4 mb-8">
+              {[
+                { icon: '📍', text: '4500 Auto Boulevard, Bay 12' },
+                { icon: '📞', text: '(555) 789-0123' },
+                { icon: '✉️', text: 'wash@shineonauto.com' },
+                { icon: '🕐', text: 'Mon-Sun 7AM - 7PM' },
+              ].map((c, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <span className="text-lg">{c.icon}</span>
+                  <span className="text-sm font-semibold" style={{ color: 'var(--heading)', fontFamily: "'Outfit', sans-serif" }}>{c.text}</span>
+                </div>
+              ))}
+            </div>
+            <img src="https://picsum.photos/seed/car-wash-facility/500/300" alt="ShineOn facility" className="rounded-2xl shadow-lg w-full object-cover" style={{ maxHeight: 240 }} />
+          </div>
+          <div className="reveal" style={{ transitionDelay: '0.15s' }}>
+            {submitted ? (
+              <div className="rounded-2xl p-12 text-center border bg-white" style={{ borderColor: 'var(--border)' }}>
+                <span className="text-5xl block mb-4">🚗</span>
+                <h3 className="text-2xl font-black mb-2" style={{ color: 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>Booking Confirmed!</h3>
+                <p style={{ color: 'var(--body)' }}>We will send a confirmation text with your appointment details. See you soon!</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="rounded-2xl p-8 border bg-white" style={{ borderColor: 'var(--border)' }}>
+                <input type="text" placeholder="Your Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required className="w-full px-4 py-3 rounded-lg border text-sm mb-4" style={{ borderColor: 'var(--border)', fontFamily: "'Outfit', sans-serif" }} />
+                <input type="tel" placeholder="Phone Number" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required className="w-full px-4 py-3 rounded-lg border text-sm mb-4" style={{ borderColor: 'var(--border)', fontFamily: "'Outfit', sans-serif" }} />
+                <input type="text" placeholder="Vehicle (Year, Make, Model)" value={formData.vehicle} onChange={(e) => setFormData({ ...formData, vehicle: e.target.value })} className="w-full px-4 py-3 rounded-lg border text-sm mb-4" style={{ borderColor: 'var(--border)', fontFamily: "'Outfit', sans-serif" }} />
+                <select value={formData.service} onChange={(e) => setFormData({ ...formData, service: e.target.value })} className="w-full px-4 py-3 rounded-lg border text-sm mb-4" style={{ borderColor: 'var(--border)', fontFamily: "'Outfit', sans-serif" }}>
+                  <option value="">Select Package</option>
+                  {packages.map((p, i) => <option key={i} value={p.name}>{p.name} — {p.price}</option>)}
+                </select>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <input type="date" value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} className="px-4 py-3 rounded-lg border text-sm" style={{ borderColor: 'var(--border)', fontFamily: "'Outfit', sans-serif" }} />
+                  <select value={formData.time} onChange={(e) => setFormData({ ...formData, time: e.target.value })} className="px-4 py-3 rounded-lg border text-sm" style={{ borderColor: 'var(--border)', fontFamily: "'Outfit', sans-serif" }}>
+                    <option value="">Preferred Time</option>
+                    {['7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM'].map((t) => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+                <button type="submit" className="w-full py-3 rounded-lg text-white font-bold text-sm transition-transform hover:-translate-y-1" style={{ background: 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>Confirm Booking</button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-12" style={{ background: 'var(--heading)', color: '#94a3b8' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h4 className="text-xl font-extrabold text-[#0288d1] mb-2">
-                ShineZone
-              </h4>
-              <p className="text-gray-400 text-sm font-['Work_Sans']">
-                Premium car wash and detailing services across the Phoenix metro
-                area. Eco-friendly, fast, and always spotless.
-              </p>
+              <div className="flex items-center gap-2 mb-4"><span className="text-2xl">💧</span><span className="font-black text-white text-lg" style={{ fontFamily: "'Outfit', sans-serif" }}>ShineOn</span></div>
+              <p className="text-sm leading-relaxed">Premium auto wash and detailing. Protecting your investment with expert care since 2014.</p>
             </div>
             <div>
-              <h5 className="font-bold text-white mb-3 uppercase text-sm tracking-wider">
-                Services
-              </h5>
-              <ul className="space-y-2 text-gray-400 text-sm font-['Work_Sans']">
-                <li>Basic Wash</li>
-                <li>Deluxe Wash</li>
-                <li>Premium Wash</li>
-                <li>Ultimate Detail</li>
-                <li>Add-On Services</li>
+              <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>Services</h4>
+              <ul className="space-y-2 text-sm">
+                {['Express Wash', 'Hand Wash', 'Ceramic Coating', 'Interior Detail', 'Paint Correction'].map((l) => <li key={l}><a href="#services" className="hover:text-white transition-colors">{l}</a></li>)}
               </ul>
             </div>
             <div>
-              <h5 className="font-bold text-white mb-3 uppercase text-sm tracking-wider">
-                Company
-              </h5>
-              <ul className="space-y-2 text-gray-400 text-sm font-['Work_Sans']">
-                <li>About Us</li>
-                <li>Locations</li>
-                <li>Careers</li>
-                <li>Franchise</li>
-                <li>Contact</li>
+              <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>Company</h4>
+              <ul className="space-y-2 text-sm">
+                {['About', 'Careers', 'Gift Cards', 'Fleet Program', 'Franchise'].map((l) => <li key={l}><a href="#" className="hover:text-white transition-colors">{l}</a></li>)}
               </ul>
             </div>
             <div>
-              <h5 className="font-bold text-white mb-3 uppercase text-sm tracking-wider">
-                Connect
-              </h5>
-              <ul className="space-y-2 text-gray-400 text-sm font-['Work_Sans']">
-                <li>Facebook</li>
-                <li>Instagram</li>
-                <li>Twitter / X</li>
-                <li>YouTube</li>
+              <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider" style={{ fontFamily: "'Outfit', sans-serif" }}>Social</h4>
+              <ul className="space-y-2 text-sm">
+                {['Instagram', 'Facebook', 'YouTube', 'TikTok'].map((l) => <li key={l}><a href="#" className="hover:text-white transition-colors">{l}</a></li>)}
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm font-['Work_Sans']">
-            &copy; {new Date().getFullYear()} ShineZone Car Wash. Phoenix, AZ.
-            All rights reserved.
+          <div className="border-t pt-6 text-center text-sm" style={{ borderColor: '#1e293b' }}>
+            &copy; 2024 ShineOn Auto Spa. All rights reserved.
           </div>
         </div>
       </footer>
