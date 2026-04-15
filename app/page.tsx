@@ -363,7 +363,7 @@ export default function HomePage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-12" style={{ background: 'var(--heading)', color: '#94a3b8' }}>
+      <footer className="py-12" style={{ background: 'var(--heading)', color: '#a8b8cc' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>

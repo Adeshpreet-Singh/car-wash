@@ -1,5 +1,6 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss";
 
 :root {
   --accent: #0288d1;
@@ -180,7 +181,7 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 4px rgba(2, 136, 209, 0.12);
 }
 input::placeholder, textarea::placeholder {
-  color: rgba(55, 71, 79, 0.45) !important;
+  color: rgba(55, 71, 79, 0.6) !important;
 }
 
 /* ===== IMAGE HOVER ===== */
@@ -260,7 +261,6 @@ footer { background: var(--dark) !important; }
 }
 p, li, span, td, label, dd { font-size: max(14px, inherit); line-height: 1.7; }
 button { cursor: pointer; }
-
 
 /* ===== FINAL 10/10 POLISH ===== */
 
