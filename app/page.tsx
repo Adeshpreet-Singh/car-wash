@@ -81,7 +81,7 @@ export default function HomePage() {
           </a>
           <div className="hidden md:flex items-center gap-7">
             {['Services', 'Packages', 'Gallery', 'Reviews', 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-semibold transition-colors" style={{ color: 'var(--body)', fontFamily: "'Outfit', sans-serif" }}
+              <a key={item} href={'#${item.toLowerCase()}'} className="text-sm font-semibold transition-colors" style={{ color: 'var(--body)', fontFamily: "'Outfit', sans-serif" }}
                 onMouseOver={(e) => (e.currentTarget.style.color = 'var(--accent)')}
                 onMouseOut={(e) => (e.currentTarget.style.color = 'var(--body)')}>{item}</a>
             ))}
@@ -106,23 +106,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section reveal" style={ background: 'var(--bg-secondary)' }>
+      <section className="section reveal" style={{  background: 'var(--bg-secondary)'  }}>
         <div className="container">
-          <h2 className="text-center" style={ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }>
+          <h2 className="text-center" style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem'  }}>
             Our Process
           </h2>
-          <p className="text-center" style={ 
-            color: 'var(--text-secondary)', 
+          <p className="text-center" style={{ color: 'var(--text-secondary)', 
             maxWidth: '700px', 
             margin: '0 auto 3rem',
             fontSize: '1.125rem'
-          }>
+           }}>
             A structured approach that ensures quality, efficiency, and client satisfaction.
           </p>
-          <div style={ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }>
-            <div style={ textAlign: 'center' }>
-              <div style={ 
-                width: '80px', 
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem'  }}>
+            <div style={{ textAlign: 'center'  }}>
+              <div style={{ width: '80px', 
                 height: '80px', 
                 borderRadius: '50%', 
                 background: '#dc2626', 
@@ -133,15 +131,14 @@ export default function HomePage() {
                 fontSize: '2rem',
                 fontWeight: 'bold',
                 margin: '0 auto 1rem'
-              }>1</div>
-              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Discovery</h3>
-              <p style={ color: 'var(--text-secondary)' }>
+               }}>1</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem'  }}>Discovery</h3>
+              <p style={{ color: 'var(--text-secondary)'  }}>
                 We start by understanding your business, goals, and challenges.
               </p>
             </div>
-            <div style={ textAlign: 'center' }>
-              <div style={ 
-                width: '80px', 
+            <div style={{ textAlign: 'center'  }}>
+              <div style={{ width: '80px', 
                 height: '80px', 
                 borderRadius: '50%', 
                 background: '#dc2626', 
@@ -152,15 +149,14 @@ export default function HomePage() {
                 fontSize: '2rem',
                 fontWeight: 'bold',
                 margin: '0 auto 1rem'
-              }>2</div>
-              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Planning</h3>
-              <p style={ color: 'var(--text-secondary)' }>
+               }}>2</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem'  }}>Planning</h3>
+              <p style={{ color: 'var(--text-secondary)'  }}>
                 We develop a comprehensive strategy and roadmap for success.
               </p>
             </div>
-            <div style={ textAlign: 'center' }>
-              <div style={ 
-                width: '80px', 
+            <div style={{ textAlign: 'center'  }}>
+              <div style={{ width: '80px', 
                 height: '80px', 
                 borderRadius: '50%', 
                 background: '#dc2626', 
@@ -171,15 +167,14 @@ export default function HomePage() {
                 fontSize: '2rem',
                 fontWeight: 'bold',
                 margin: '0 auto 1rem'
-              }>3</div>
-              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Execution</h3>
-              <p style={ color: 'var(--text-secondary)' }>
+               }}>3</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem'  }}>Execution</h3>
+              <p style={{ color: 'var(--text-secondary)'  }}>
                 Our team brings the plan to life with precision and creativity.
               </p>
             </div>
-            <div style={ textAlign: 'center' }>
-              <div style={ 
-                width: '80px', 
+            <div style={{ textAlign: 'center'  }}>
+              <div style={{ width: '80px', 
                 height: '80px', 
                 borderRadius: '50%', 
                 background: '#dc2626', 
@@ -190,9 +185,9 @@ export default function HomePage() {
                 fontSize: '2rem',
                 fontWeight: 'bold',
                 margin: '0 auto 1rem'
-              }>4</div>
-              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Delivery</h3>
-              <p style={ color: 'var(--text-secondary)' }>
+               }}>4</div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem'  }}>Delivery</h3>
+              <p style={{ color: 'var(--text-secondary)'  }}>
                 We deliver exceptional results with ongoing support and optimization.
               </p>
             </div>
@@ -229,7 +224,7 @@ export default function HomePage() {
         {mobileMenu && (
           <div className="md:hidden bg-white border-t px-6 py-4 flex flex-col gap-3" style={{ borderColor: 'var(--border)' }}>
             {['Services', 'Packages', 'Gallery', 'Reviews', 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenu(false)} className="text-sm font-semibold py-2" style={{ color: 'var(--heading)' }}>{item}</a>
+              <a key={item} href={'#${item.toLowerCase()}'} onClick={() => setMobileMenu(false)} className="text-sm font-semibold py-2" style={{ color: 'var(--heading)' }}>{item}</a>
             ))}
           
       <section className="section reveal">
@@ -649,7 +644,7 @@ export default function HomePage() {
     </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((svc, i) => (
-              <div key={i} className="reveal rounded-2xl overflow-hidden border transition-all hover:shadow-xl hover:-translate-y-2 bg-white" style={{ borderColor: 'var(--border)', transitionDelay: `${i * 0.08}s` }}>
+              <div key={i} className="reveal rounded-2xl overflow-hidden border transition-all hover:shadow-xl hover:-translate-y-2 bg-white" style={{  borderColor: 'var(--border)', transitionDelay: '${i * 0.08 }}s' }}>
                 <img src={svc.img} alt={svc.title} className="w-full h-44 object-cover" />
                 <div className="p-6">
                   <span className="text-3xl mb-3 block">{svc.icon}</span>
@@ -798,7 +793,7 @@ export default function HomePage() {
     </div>
           <div className="grid md:grid-cols-3 gap-8">
             {packages.map((pkg, i) => (
-              <div key={i} className={`reveal rounded-2xl p-8 bg-white border-2 relative transition-all hover:shadow-xl hover:-translate-y-2 ${pkg.highlight ? 'shadow-xl' : ''}`} style={{ borderColor: pkg.highlight ? 'var(--accent)' : 'var(--border)', transitionDelay: `${i * 0.1}s` }}>
+              <div key={i} className={'reveal rounded-2xl p-8 bg-white border-2 relative transition-all hover:shadow-xl hover:-translate-y-2 ${pkg.highlight ? 'shadow-xl' : ''}'} style={{  borderColor: pkg.highlight ? 'var(--accent)' : 'var(--border)', transitionDelay: '${i * 0.1 }}s' }}>
                 {pkg.badge && <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white" style={{ background: 'var(--accent)' }}>{pkg.badge}</span>}
                 <h3 className="text-xl font-black mb-1" style={{ fontFamily: "'Outfit', sans-serif", color: 'var(--heading)' }}>{pkg.name}</h3>
                 <div className="mb-4"><span className="text-4xl font-black" style={{ color: 'var(--accent)' }}>{pkg.price}</span><span className="text-xs font-semibold ml-1" style={{ color: 'var(--body)' }}>{pkg.period}</span>
@@ -830,7 +825,7 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <a href="#contact" className={`block text-center py-3 rounded-lg font-bold text-sm transition-all ${pkg.highlight ? 'text-white' : ''}`} style={{ background: pkg.highlight ? 'var(--accent)' : 'white', border: pkg.highlight ? 'none' : '2px solid var(--accent)', color: pkg.highlight ? 'white' : 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>
+                <a href="#contact" className={'block text-center py-3 rounded-lg font-bold text-sm transition-all ${pkg.highlight ? 'text-white' : ''}'} style={{ background: pkg.highlight ? 'var(--accent)' : 'white', border: pkg.highlight ? 'none' : '2px solid var(--accent)', color: pkg.highlight ? 'white' : 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>
                   Select Package
                 </a>
               
@@ -1174,8 +1169,8 @@ export default function HomePage() {
     </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {gallery.map((src, i) => (
-              <div key={i} className="reveal overflow-hidden rounded-xl group cursor-pointer" style={{ transitionDelay: `${i * 0.06}s` }}>
-                <img src={src} alt={`Gallery ${i + 1}`} className="w-full h-44 md:h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
+              <div key={i} className="reveal overflow-hidden rounded-xl group cursor-pointer" style={{  transitionDelay: '${i * 0.06 }}s' }}>
+                <img src={src} alt={'Gallery ${i + 1}'} className="w-full h-44 md:h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
               
       <section className="section reveal">
         <div className="container" style={{ maxWidth: '800px' }}>
@@ -1452,7 +1447,7 @@ export default function HomePage() {
     </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
-              <div key={i} className="reveal rounded-2xl p-8 bg-white border transition-all hover:shadow-lg" style={{ borderColor: 'var(--border)', transitionDelay: `${i * 0.1}s` }}>
+              <div key={i} className="reveal rounded-2xl p-8 bg-white border transition-all hover:shadow-lg" style={{  borderColor: 'var(--border)', transitionDelay: '${i * 0.1 }}s' }}>
                 <div className="flex items-center gap-3 mb-4">
                   <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
                   <div>
