@@ -1170,7 +1170,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {gallery.map((src, i) => (
               <div key={i} className="reveal overflow-hidden rounded-xl group cursor-pointer" style={{  transitionDelay: `${i * 0.06} }}s` }}>
-                <img src={src} alt={`Gallery ${i + }1}`} className="w-full h-44 md:h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
+                <img src={src} alt={`Gallery ${i  + 1}`} className="w-full h-44 md:h-52 object-cover transition-transform duration-500 group-hover:scale-110" />
               
       <section className="section reveal">
         <div className="container" style={{ maxWidth: '800px' }}>
