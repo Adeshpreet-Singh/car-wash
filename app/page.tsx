@@ -106,6 +106,101 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="section reveal" style={ background: 'var(--bg-secondary)' }>
+        <div className="container">
+          <h2 className="text-center" style={ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }>
+            Our Process
+          </h2>
+          <p className="text-center" style={ 
+            color: 'var(--text-secondary)', 
+            maxWidth: '700px', 
+            margin: '0 auto 3rem',
+            fontSize: '1.125rem'
+          }>
+            A structured approach that ensures quality, efficiency, and client satisfaction.
+          </p>
+          <div style={ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }>
+            <div style={ textAlign: 'center' }>
+              <div style={ 
+                width: '80px', 
+                height: '80px', 
+                borderRadius: '50%', 
+                background: '#dc2626', 
+                color: 'white', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                margin: '0 auto 1rem'
+              }>1</div>
+              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Discovery</h3>
+              <p style={ color: 'var(--text-secondary)' }>
+                We start by understanding your business, goals, and challenges.
+              </p>
+            </div>
+            <div style={ textAlign: 'center' }>
+              <div style={ 
+                width: '80px', 
+                height: '80px', 
+                borderRadius: '50%', 
+                background: '#dc2626', 
+                color: 'white', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                margin: '0 auto 1rem'
+              }>2</div>
+              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Planning</h3>
+              <p style={ color: 'var(--text-secondary)' }>
+                We develop a comprehensive strategy and roadmap for success.
+              </p>
+            </div>
+            <div style={ textAlign: 'center' }>
+              <div style={ 
+                width: '80px', 
+                height: '80px', 
+                borderRadius: '50%', 
+                background: '#dc2626', 
+                color: 'white', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                margin: '0 auto 1rem'
+              }>3</div>
+              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Execution</h3>
+              <p style={ color: 'var(--text-secondary)' }>
+                Our team brings the plan to life with precision and creativity.
+              </p>
+            </div>
+            <div style={ textAlign: 'center' }>
+              <div style={ 
+                width: '80px', 
+                height: '80px', 
+                borderRadius: '50%', 
+                background: '#dc2626', 
+                color: 'white', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                margin: '0 auto 1rem'
+              }>4</div>
+              <h3 style={ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }>Delivery</h3>
+              <p style={ color: 'var(--text-secondary)' }>
+                We deliver exceptional results with ongoing support and optimization.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
     </div>
           <a href="#contact" className="hidden md:inline-block px-5 py-2.5 rounded-lg text-white text-sm font-bold" style={{ background: 'var(--accent)', fontFamily: "'Outfit', sans-serif" }}>Book a Wash</a>
           <button onClick={() => setMobileMenu(!mobileMenu)} className="md:hidden text-2xl" style={{ color: 'var(--heading)' }}>☰</button>
