@@ -1,219 +1,445 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 
-export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
+/* ── constants ────────────────────────────────────────────── */
+const PHONE = '+15551234567';
+const EMAIL = 'hello@aquashinewash.com';
+const ADDRESS = '742 Sparkle Lane, Austin, TX 78701';
+const WHATSAPP = '15551234567';
+const MAPS_QUERY = encodeURIComponent(ADDRESS);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) { element.scrollIntoView({ behavior: 'smooth' }); element.focus(); }
-    setMenuOpen(false);
-  };
+const HOURS = [
+ { day: 'Mon – Fri', time: '7:00 AM – 8:00 PM' },
+ { day: 'Saturday', time: '8:00 AM – 7:00 PM' },
+ { day: 'Sunday', time: '9:00 AM – 5:00 PM' },
+];
 
-  const testimonials = [
-    { name: "Tom Harris", role: "BMW Owner", text: "My car looks brand new every time. The premium detail is worth every penny - my 5 Series has never looked better!", rating: 5, date: "March 2026" },
-    { name: "Karen Martinez", role: "Minivan Mom", text: "With 3 kids, my minivan takes a beating. ShineTime's full service gets it looking immaculate. Staff is always friendly.", rating: 5, date: "February 2026" },
-    { name: "James Wright", role: "Classic Car Collector", text: "They handled my vintage Mustang with kid gloves. The ceramic coating has preserved the paint beautifully.", rating: 5, date: "January 2026" },
-    { name: "Linda Chen", role: "Tesla Owner", text: "Was nervous about an electric car at a car wash but they assured me. Results were perfect - no issues at all!", rating: 4, date: "December 2025" }
-  ];
+const SERVICES = [
+ {
+ icon: '🧽',
+ title: 'Basic Wash',
+ desc: 'Exterior hand wash, tire shine, window cleaning & air freshener.',
+ price: '$19',
+ duration: '~20 min',
+ },
+ {
+ icon: '✨',
+ title: 'Premium Wash',
+ desc: 'Everything in Basic plus clay bar decontamination, spray wax & interior vacuum.',
+ price: '$49',
+ duration: '~45 min',
+ },
+ {
+ icon: '💎',
+ title: 'Full Detailing',
+ desc: 'Paint correction, ceramic coating, leather conditioning, engine bay & full interior detail.',
+ price: '$199',
+ duration: '~4 hrs',
+ },
+];
 
-  const galleryImages = [
-    { src: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=600&q=80', alt: 'Shiny clean car exterior', caption: 'Express Wash' },
-    { src: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&q=80', alt: 'Car being washed', caption: 'Full Service' },
-    { src: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&q-80', alt: 'Detailing in progress', caption: 'Premium Detail' },
-    { src: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80', alt: 'Showroom shine', caption: 'Ceramic Coating' },
-    { src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd04?w=600&q=80', alt: 'Clean wheels and tires', caption: 'Wheel & Tire' },
-    { src: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&q=80', alt: 'Spotless interior', caption: 'Interior Detail' }
-  ];
+const PACKAGES = [
+ {
+ name: 'Starter',
+ price: '$39',
+ period: '/month',
+ features: ['2 Basic Washes', '10% off add-ons', 'Priority lane access'],
+ highlight: false,
+ },
+ {
+ name: 'Unlimited',
+ price: '$79',
+ period: '/month',
+ features: [
+ 'Unlimited Basic Washes',
+ '2 Premium Washes',
+ 'Free vacuum every visit',
+ '20% off detailing',
+ ],
+ highlight: true,
+ },
+ {
+ name: 'VIP',
+ price: '$149',
+ period: '/month',
+ features: [
+ 'Unlimited Premium Washes',
+ '1 Full Detail / quarter',
+ 'Ceramic boost every visit',
+ 'Complimentary pickup & delivery',
+ ],
+ highlight: false,
+ },
+];
 
-  const packages = [
-    { name: 'Express Wash', desc: 'Exterior wash, tire shine, windows', price: '$15', time: '10 min' },
-    { name: 'Full Service', desc: 'Interior vacuum, dashboard, exterior wash', price: '$35', time: '25 min' },
-    { name: 'Premium Detail', desc: 'Clay bar, polish, wax, interior deep clean', price: '$149', time: '3 hrs' },
-    { name: 'Ceramic Coating', desc: 'Professional ceramic protection, paint correction', price: '$599', time: '1 day' },
-  ];
+const FAQS = [
+ {
+ q: 'Do I need an appointment?',
+ a: 'Walk-ins are always welcome for Basic and Premium washes. Full Detailing is by appointment — book online or call us.',
+ },
+ {
+ q: 'How long does a ceramic coating last?',
+ a: 'Our professional ceramic coating lasts 2–5 years depending on maintenance. We include a free inspection at 6 months.',
+ },
+ {
+ q: 'Can I cancel my membership anytime?',
+ a: 'Yes! All memberships are month-to-month with no contracts. Cancel anytime from your dashboard or by calling us.',
+ },
+ {
+ q: 'Do you wash trucks and SUVs?',
+ a: 'Absolutely. We service sedans, SUVs, trucks, and vans. Oversized vehicles may have a small surcharge.',
+ },
+];
 
-  return (
-    <div className="bg-blue-50 text-gray-900 min-h-screen px-4 md:px-8">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-[100] focus-visible:outline-2 focus-visible:outline-white font-bold px-4 md:px-8">Skip to main content</a>
-      <header>
-        <nav role="navigation" aria-label="Main navigation" className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm px-4 md:px-8">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center px-4 md:px-8">
-            <div className="flex items-center gap-3 px-4 md:px-8">
-              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-xl px-4 md:px-8" aria-hidden="true">\uD83D\uDE97</div>
-              <div><h1 className="text-lg font-bold text-blue-900 px-4 md:px-8" style={{ fontSize: "3rem", fontWeight: "bold", marginBottom: "1.5rem", lineHeight: "1.2" }}>ShineTime</h1><p className="text-[9px] text-blue-600 tracking-wider px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>CAR WASH & DETAILING</p></div>
-            </div>
-            <div className="hidden md:flex items-center gap-8 px-4 md:px-8">
-              {['Packages','Membership','About','Contact'].map(item => (<button key={item} onClick={() = style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}> scrollToSection(item.toLowerCase())} aria-label={`Navigate to ${item} section`} className="text-sm text-gray-600 hover:text-blue-600 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 rounded px-4 md:px-8">{item}</button>))}
-              <button aria-label="Get a car wash now" className="bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-blue-700 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 px-4 md:px-8" style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}>Wash Now</button>
-            </div>
-            <button aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} className="md:hidden text-blue-600 focus-visible:outline-2 focus-visible:outline-blue-500 rounded px-4 md:px-8" onClick={() = style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}> setMenuOpen(!menuOpen)}>
-              <svg className="w-6 h-6 px-4 md:px-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">{menuOpen?<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/ style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>:<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/ style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>}</svg>
-            </button>
-          </div>
-        </nav>
-      </header>
-      <main id="main-content" role="main">
-        <section aria-labelledby="hero-heading" className="pt-24 pb-16 relative overflow-hidden px-4 md:px-8" style={{ padding: "5rem 1rem", marginBottom: "2rem" }}>
-          <div className="absolute inset-0 px-4 md:px-8" aria-hidden="true"><div className="absolute top-20 right-20 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl px-4 md:px-8"/></div>
-          <div className="relative max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center px-4 md:px-8">
-            <div>
-              <p className="text-blue-600 text-sm font-bold tracking-widest mb-4 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>DRIVE-IN, SHINE OUT</p>
-              <h2 id="hero-heading" className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-blue-900 px-4 md:px-8" style={{ fontSize: "2.25rem", fontWeight: "bold", marginBottom: "1.25rem", lineHeight: "1.3" }}>Your Car,<br/><span className="text-blue-600 px-4 md:px-8">Spotless</span></h2>
-              <p className="text-xl text-gray-600 mb-8 max-w-lg px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>Express washes to full detailing. Eco-friendly products, state-of-the-art equipment, and a shine that lasts.</p>
-              <div className="flex flex-wrap gap-4 mb-10 px-4 md:px-8">
-                <button aria-label="Get your car washed now" className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-700 transition-all hover:scale-105 focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 px-4 md:px-8" style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}>Wash Now</button>
-                <button aria-label="View our wash packages" className="border-2 border-blue-600 text-blue-700 px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-50 transition-all hover:scale-105 focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 px-4 md:px-8" style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}>View Packages</button>
-              </div>
-              <div className="flex items-center gap-8 px-4 md:px-8">
-                {[{num:'50K+',label:'Cars Washed'},{num:'8min',label:'Avg Wait Time'},{num:'4.8',label:'Google Rating'}].map((s,i) => (<div key={i}><div className="text-2xl font-bold text-blue-700 px-4 md:px-8">{s.num}</div><div className="text-sm text-gray-500 px-4 md:px-8">{s.label}</div></div>))}
-              </div>
-            </div>
-            <div className="relative px-4 md:px-8"><div className="bg-white rounded-3xl p-8 shadow-xl px-4 md:px-8"><img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&q=80" alt="Car going through an automatic car wash with soap and water" className="w-full rounded-2xl px-4 md:px-8"/></div></div>
-          </div>
-        </section>
-        <section id="packages" aria-labelledby="packages-heading" className="py-24 bg-white px-4 md:px-8" style={{ padding: "5rem 1rem", marginBottom: "2rem" }}>
-          <div className="max-w-7xl mx-auto px-6 px-4 md:px-8">
-            <div className="text-center mb-16 px-4 md:px-8"><p className="text-blue-600 text-sm font-bold tracking-widest mb-4 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>OUR PACKAGES</p><h2 id="packages-heading" className="text-4xl font-bold text-blue-900 mb-4 px-4 md:px-8" style={{ fontSize: "2.25rem", fontWeight: "bold", marginBottom: "1.25rem", lineHeight: "1.3" }}>Wash & Detail Options</h2></div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-8">
-              {packages.map((p,i) => (<article key={i} className="bg-blue-50 rounded-2xl p-6 hover:shadow-lg transition-all hover:scale-105 px-4 md:px-8"><h3 className="text-xl font-bold text-blue-900 mb-2 px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>{p.name}</h3><p className="text-gray-500 text-sm mb-4 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>{p.desc}</p><div className="flex justify-between items-center px-4 md:px-8"><span className="text-2xl font-bold text-blue-700 px-4 md:px-8">{p.price}</span><span className="text-blue-600 text-sm px-4 md:px-8">{p.time}</span></div></article>))}
-            </div>
-          </div>
-        </section>
-        {/* Testimonials */}
-        <section id="testimonials" aria-labelledby="testimonials-heading" className="py-24 bg-blue-50 px-4 md:px-8" style={{ padding: "5rem 1rem", marginBottom: "2rem" }}>
-          <div className="max-w-7xl mx-auto px-6 px-4 md:px-8">
-            <div className="text-center mb-16 px-4 md:px-8">
-              <p className="text-blue-600 text-sm font-bold tracking-widest mb-4 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>CUSTOMER REVIEWS</p>
-              <h2 id="testimonials-heading" className="text-4xl font-bold text-blue-900 mb-4 px-4 md:px-8" style={{ fontSize: "2.25rem", fontWeight: "bold", marginBottom: "1.25rem", lineHeight: "1.3" }}>What Drivers Say</h2>
-            </div>
-            <div className="space-y-6 px-4 md:px-8">
-              {testimonials.map((t, i) => (
-                <div key={i} className="bg-white rounded-2xl p-6 shadow-lg px-4 md:px-8">
-                  <div className="flex mb-3 px-4 md:px-8" aria-label={`${t.rating} stars`}>
-                    {[...Array(t.rating)].map((_, j) => <svg key={j} className="w-5 h-5 text-yellow-400 px-4 md:px-8" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/ style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}></svg>)}
-                  </div>
-                  <p className="text-gray-600 mb-3 italic px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>&quot;{t.text}&quot;</p>
-                  <div className="border-t border-gray-200 pt-4 px-4 md:px-8">
-                    <p className="text-blue-900 font-medium px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>{t.name}</p>
-                    <p className="text-gray-500 text-sm px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>{t.role} • {t.date}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+/* ── scroll-reveal hook ───────────────────────────────────── */
+function useReveal() {
+ useEffect(() => {
+ const els = document.querySelectorAll('.reveal');
+ const io = new IntersectionObserver(
+ (entries) =>
+ entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+ { threshold: 0.12 }
+ );
+ els.forEach((el) => io.observe(el));
+ return () => io.disconnect();
+ }, []);
+}
 
-        {/* Gallery */}
-        <section id="gallery" aria-labelledby="gallery-heading" className="py-24 bg-white px-4 md:px-8" style={{ padding: "5rem 1rem", marginBottom: "2rem" }}>
-          <div className="max-w-7xl mx-auto px-6 px-4 md:px-8">
-            <div className="text-center mb-16 px-4 md:px-8">
-              <p className="text-blue-600 text-sm font-bold tracking-widest mb-4 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>OUR WORK</p>
-              <h2 id="gallery-heading" className="text-4xl font-bold text-blue-900 mb-4 px-4 md:px-8" style={{ fontSize: "2.25rem", fontWeight: "bold", marginBottom: "1.25rem", lineHeight: "1.3" }}>Before & After</h2>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 md:px-8">
-              {galleryImages.map((img, i) => (
-                <div key={i} className="relative aspect-square overflow-hidden rounded-2xl group px-4 md:px-8">
-                  <img src={img.src} alt={img.alt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 px-4 md:px-8" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 px-4 md:px-8">
-                    <p className="text-white font-medium px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>{img.caption}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+/* ── page ─────────────────────────────────────────────────── */
+export default function Page() {
+ useReveal();
 
-        <section id="contact" aria-labelledby="contact-heading" className="py-24 px-4 md:px-8" style={{ padding: "5rem 1rem", marginBottom: "2rem" }}>
-          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 px-4 md:px-8">
-            <div>
-              <p className="text-blue-600 text-sm font-bold tracking-widest mb-4 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>GET CLEAN</p>
-              <h2 id="contact-heading" className="text-4xl font-bold text-blue-900 mb-6 px-4 md:px-8" style={{ fontSize: "2.25rem", fontWeight: "bold", marginBottom: "1.25rem", lineHeight: "1.3" }}>Book Your Wash</h2>
-              <p className="text-gray-600 mb-8 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>Drive in today or schedule for later. No appointment needed for express wash.</p>
-              <div className="space-y-4 px-4 md:px-8">
-                <div className="flex items-start gap-3 px-4 md:px-8">
-                  <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0 px-4 md:px-8" aria-hidden="true">📍</div>
-                  <div><h3 className="font-bold text-blue-900 px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>Visit Us</h3><p className="text-gray-600 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>123 Shine Boulevard<br/>Auto Row, Houston, TX 77057</p></div>
-                </div>
-                <div className="flex items-start gap-3 px-4 md:px-8">
-                  <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0 px-4 md:px-8" aria-hidden="true">📞</div>
-                  <div><h3 className="font-bold text-blue-900 px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>Call Us</h3><p className="text-gray-600 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>(713) 555-WASH</p></div>
-                </div>
-                <div className="flex items-start gap-3 px-4 md:px-8">
-                  <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0 px-4 md:px-8" aria-hidden="true">🕒</div>
-                  <div><h3 className="font-bold text-blue-900 px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>Hours</h3><p className="text-gray-600 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>Mon-Sat: 7AM-8PM<br/>Sun: 8AM-6PM</p></div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white rounded-2xl shadow-xl p-8 px-4 md:px-8">
-              <form noValidate className="space-y-6 px-4 md:px-8">
-                <div><label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-2 px-4 md:px-8">Your Name</label><input id="contact-name" type="text" aria-required="true" placeholder="Alex Driver" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors px-4 md:px-8"/></div>
-                <div><label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-2 px-4 md:px-8">Email</label><input id="contact-email" type="email" aria-required="true" placeholder="alex@example.com" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors px-4 md:px-8"/></div>
-                <div><label htmlFor="contact-package" className="block text-sm font-medium text-gray-700 mb-2 px-4 md:px-8">Package</label><select id="contact-package" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors px-4 md:px-8"><option value="">Select package</option><option value="express">Express Wash - $15</option><option value="full">Full Service - $35</option><option value="premium">Premium Detail - $149</option><option value="ceramic">Ceramic Coating - $599</option></select></div>
-                <button type="submit" aria-label="Book your car wash" className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-all hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2 px-4 md:px-8" style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}>Book Now</button>
-              </form>
-            </div>
-          </div>
-        </section>
-      
-      <section style={{ padding: "5rem 1rem", background: "var(--primary)", color: "white", textAlign: "center" }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <h2 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "1rem" }}>Ready to Get Started?</h2>
-          <p style={{ fontSize: "1.25rem", marginBottom: "2rem", opacity: 0.9 }}>Contact us today to discuss your project and get a free consultation.</p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <button style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "white", color: "var(--primary)", border: "none", cursor: "pointer" }}>Get Free Quote</button>
-            <button style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "transparent", color: "white", border: "2px solid white", cursor: "pointer" }}>Schedule a Call</button>
-          </div>
-        </div>
-      </section>
+ /* contact form state */
+ const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
-  </main>
-      <footer role="contentinfo" className="py-12 bg-blue-900 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto px-6 px-4 md:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8 px-4 md:px-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4 px-4 md:px-8">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white px-4 md:px-8" aria-hidden="true">🚗</div>
-                <div><h3 className="text-white font-bold px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>ShineTime</h3><p className="text-xs text-blue-300 px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>CAR WASH & DETAILING</p></div>
-              </div>
-              <p className="text-blue-300 text-sm px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>Eco-friendly car care since 2010.</p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold mb-4 px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>Quick Links</h3>
-              <ul className="space-y-2 px-4 md:px-8">
-                <li><button onClick={() = style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}> scrollToSection('packages')} className="text-blue-300 hover:text-white transition-colors text-sm px-4 md:px-8">Packages</button></li>
-                <li><button onClick={() = style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}> scrollToSection('testimonials')} className="text-blue-300 hover:text-white transition-colors text-sm px-4 md:px-8">Reviews</button></li>
-                <li><button onClick={() = style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}> scrollToSection('gallery')} className="text-blue-300 hover:text-white transition-colors text-sm px-4 md:px-8">Gallery</button></li>
-                <li><button onClick={() = style={{ padding: "1rem 2rem", fontSize: "1.125rem", fontWeight: "600", borderRadius: "0.5rem", background: "var(--primary)", color: "white", border: "none", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}> scrollToSection('contact')} className="text-blue-300 hover:text-white transition-colors text-sm px-4 md:px-8">Contact</button></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-white font-bold mb-4 px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>Services</h3>
-              <ul className="space-y-2 px-4 md:px-8">
-                <li><span className="text-blue-300 text-sm px-4 md:px-8">Express Wash</span></li>
-                <li><span className="text-blue-300 text-sm px-4 md:px-8">Full Service</span></li>
-                <li><span className="text-blue-300 text-sm px-4 md:px-8">Premium Detail</span></li>
-                <li><span className="text-blue-300 text-sm px-4 md:px-8">Ceramic Coating</span></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-white font-bold mb-4 px-4 md:px-8" style={{ fontSize: "1.5rem", fontWeight: "600", marginBottom: "1rem", lineHeight: "1.4" }}>Follow Us</h3>
-              <div className="flex gap-3 px-4 md:px-8">
-                <a href="#" className="w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center text-white hover:bg-blue-600 transition-colors px-4 md:px-8" aria-label="Instagram">
-                  <svg className="w-5 h-5 px-4 md:px-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/ style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}></svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center text-white hover:bg-blue-600 transition-colors px-4 md:px-8" aria-label="Facebook">
-                  <svg className="w-5 h-5 px-4 md:px-8" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/ style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-blue-800 pt-8 text-center px-4 md:px-8">
-            <p className="text-blue-300 text-sm px-4 md:px-8" style={{ fontSize: "1.125rem", lineHeight: "1.7", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>&copy; 2026 ShineTime Car Wash. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
+ async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+ e.preventDefault();
+ setStatus('sending');
+ const form = e.currentTarget;
+ const fd = new FormData(form);
+ fd.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY'); // <-- replace with real key
+
+ try {
+ const res = await fetch('https://api.web3forms.com/submit', {
+ method: 'POST',
+ body: fd,
+ });
+ const json = await res.json();
+ if (json.success) {
+ setStatus('sent');
+ form.reset();
+ } else {
+ setStatus('error');
+ }
+ } catch {
+ setStatus('error');
+ }
+ }
+
+ return (
+ <>
+ {/* ════════════ NAV ════════════ */}
+ <nav
+ >
+ <a href="#top">
+ 💧 AquaShine
+ </a>
+ <div>
+ {['Services', 'Pricing', 'Hours', 'Contact'].map((s) => (
+ <a key={s} href={`#${s.toLowerCase()}`}>
+ {s}
+ </a>
+ ))}
+ <a href={`tel:${PHONE}`} className="btn">
+ Call Now
+ </a>
+ </div>
+ </nav>
+
+ {/* ════════════ HERO ════════════ */}
+ <section id="top" className="hero">
+ <div>
+ <span className="badge">Austin&apos;s #1 Rated Car Wash</span>
+ <h1 className="heading">
+ A Shine That<br />Speaks for Itself
+ </h1>
+ <p>
+ From a quick exterior rinse to full paint correction &amp; ceramic coating — we treat every car like our own.
+ </p>
+ <div>
+ <a href="#services" className="btn">View Services</a>
+ <a href="#contact" className="btn-outline">Book Online</a>
+ </div>
+ </div>
+ </section>
+
+ {/* ════════════ SERVICES ════════════ */}
+ <section id="services">
+ <div>
+ <div className="reveal">
+ <span className="badge">What We Offer</span>
+ <h2 className="heading">
+ Our Services
+ </h2>
+ </div>
+ <div>
+ {SERVICES.map((s) => (
+ <div key={s.title} className="card reveal">
+ <div>{s.icon}</div>
+ <h3>{s.title}</h3>
+ <p>{s.desc}</p>
+ <div>
+ <span>{s.price}</span>
+ <span>{s.duration}</span>
+ </div>
+ </div>
+ ))}
+ </div>
+ </div>
+ </section>
+
+ {/* ════════════ PACKAGES / MEMBERSHIP ════════════ */}
+ <section id="pricing" className="section-alt">
+ <div>
+ <div className="reveal">
+ <span className="badge">Membership Plans</span>
+ <h2 className="heading">
+ Save Big Every Month
+ </h2>
+ <p>No contracts. Cancel anytime. All plans include priority lane.</p>
+ </div>
+ <div>
+ {PACKAGES.map((pkg) => (
+ <div
+ key={pkg.name}
+ className="card reveal"
+ >
+ {pkg.highlight && (
+ <span
+ >
+ Most Popular
+ </span>
+ )}
+ <h3>{pkg.name}</h3>
+ <div>
+ <span>{pkg.price}</span>
+ <span>{pkg.period}</span>
+ </div>
+ <ul>
+ {pkg.features.map((f) => (
+ <li key={f}>
+ ✓&ensp;{f}
+ </li>
+ ))}
+ </ul>
+ <a href="#contact" className={pkg.highlight ? 'btn' : 'btn-outline'}>
+ Get Started
+ </a>
+ </div>
+ ))}
+ </div>
+ </div>
+ </section>
+
+ {/* ════════════ WHY CHOOSE US ════════════ */}
+ <section>
+ <div>
+ <div className="reveal">
+ <span className="badge">Why AquaShine</span>
+ <h2 className="heading">
+ Built on Trust &amp; Quality
+ </h2>
+ </div>
+ <div>
+ {[
+ { icon: '🏆', stat: '12+', label: 'Years Experience' },
+ { icon: '🚗', stat: '50k+', label: 'Cars Washed' },
+ { icon: '⭐', stat: '4.9', label: 'Google Rating' },
+ { icon: '🌿', stat: '100%', label: 'Eco-Friendly Products' },
+ ].map((item) => (
+ <div key={item.label} className="reveal">
+ <div>{item.icon}</div>
+ <div>{item.stat}</div>
+ <div>{item.label}</div>
+ </div>
+ ))}
+ </div>
+ </div>
+ </section>
+
+ {/* ════════════ HOURS & MAP ════════════ */}
+ <section id="hours" className="section-alt">
+ <div>
+ <div className="reveal">
+ <span className="badge">Find Us</span>
+ <h2 className="heading">
+ Hours &amp; Location
+ </h2>
+ </div>
+ <div className="reveal">
+ {/* hours card */}
+ <div className="card">
+ <h3>Business Hours</h3>
+ {HOURS.map((h) => (
+ <div key={h.day}>
+ <span>{h.day}</span>
+ <span>{h.time}</span>
+ </div>
+ ))}
+ <p>
+ {ADDRESS}
+ <br />
+ <a href={`https://maps.google.com/?q=${MAPS_QUERY}`} target="_blank" rel="noopener noreferrer">
+ Get Directions
+ </a>
+ </p>
+ <div>
+ <a href={`tel:${PHONE}`} className="btn">Call</a>
+ <a href={`mailto:${EMAIL}`} className="btn-outline">Email</a>
+ <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="btn-outline">WhatsApp</a>
+ </div>
+ </div>
+
+ {/* map embed */}
+ <div>
+ <iframe
+ title="AquaShine Location"
+ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3446.5!2d-97.7431!3d30.2672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDE2JzAyLjAiTiA5N8KwNDQnMzUuMiJX!5e0!3m2!1sen!2sus!4v1"
+ width="100%"
+ height="360"
+
+ loading="lazy"
+ referrerPolicy="no-referrer-when-downgrade"
+ allowFullScreen
+ />
+ </div>
+ </div>
+ </div>
+ </section>
+
+ {/* ════════════ FAQ ════════════ */}
+ <section>
+ <div>
+ <div className="reveal">
+ <span className="badge">FAQ</span>
+ <h2 className="heading">
+ Common Questions
+ </h2>
+ </div>
+ {FAQS.map((f, i) => (
+ <details key={i} className="reveal">
+ <summary>
+ {f.q}
+ <span>+</span>
+ </summary>
+ <p>{f.a}</p>
+ </details>
+ ))}
+ </div>
+ </section>
+
+ {/* ════════════ CONTACT ════════════ */}
+ <section id="contact" className="section-alt">
+ <div>
+ <div className="reveal">
+ <span className="badge">Get in Touch</span>
+ <h2 className="heading">
+ Book or Ask a Question
+ </h2>
+ <p>
+ Or reach us directly:{' '}
+ <a href={`tel:${PHONE}`}>{PHONE}</a>
+ {' · '}
+ <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+ </p>
+ </div>
+
+ <form onSubmit={handleSubmit} className="card reveal">
+ <input type="hidden" name="subject" value="New inquiry from AquaShine website" />
+ <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" />
+
+ <div>
+ <input name="name" placeholder="Your Name" required />
+ <input name="email" type="email" placeholder="Email Address" required />
+ </div>
+ <input name="phone" type="tel" placeholder="Phone (optional)" />
+ <select name="service" defaultValue="" required>
+ <option value="" disabled>Select a Service</option>
+ <option value="Basic Wash">Basic Wash</option>
+ <option value="Premium Wash">Premium Wash</option>
+ <option value="Full Detailing">Full Detailing</option>
+ <option value="Membership Inquiry">Membership Inquiry</option>
+ <option value="Other">Other</option>
+ </select>
+ <textarea name="message" rows={4} placeholder="Tell us about your vehicle or question..." required />
+ <button type="submit" className="btn" disabled={status === 'sending'}>
+ {status === 'sending' ? 'Sending...' : status === 'sent' ? 'Sent!' : 'Send Message'}
+ </button>
+ {status === 'error' && (
+ <p>
+ Something went wrong. Please try again or call us directly.
+ </p>
+ )}
+ {status === 'sent' && (
+ <p>
+ Thanks! We&apos;ll get back to you within 1 business hour.
+ </p>
+ )}
+ </form>
+ </div>
+ </section>
+
+ {/* ════════════ FOOTER ════════════ */}
+ <footer>
+ <div>
+ <div>
+ <div>AquaShine</div>
+ <p>Premium car wash &amp; detailing in the heart of Austin. Eco-friendly products, expert staff, and a shine you can trust.</p>
+ </div>
+ <div>
+ <h4>Quick Links</h4>
+ <div>
+ <a href="#services">Services</a>
+ <a href="#pricing">Pricing</a>
+ <a href="#hours">Hours</a>
+ <a href="#contact">Contact</a>
+ </div>
+ </div>
+ <div>
+ <h4>Contact</h4>
+ <div>
+ <a href={`tel:${PHONE}`}>{PHONE}</a>
+ <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+ <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+ <a href={`https://maps.google.com/?q=${MAPS_QUERY}`} target="_blank" rel="noopener noreferrer">{ADDRESS}</a>
+ </div>
+ </div>
+ <div>
+ <h4>Follow Us</h4>
+ <div>
+ {[
+ { label: 'IG', url: 'https://instagram.com/aquashinewash' },
+ { label: 'FB', url: 'https://facebook.com/aquashinewash' },
+ { label: 'X', url: 'https://x.com/aquashinewash' },
+ { label: 'TT', url: 'https://tiktok.com/@aquashinewash' },
+ ].map((s) => (
+ <a
+ key={s.label}
+ href={s.url}
+ target="_blank"
+ rel="noopener noreferrer"
+ >
+ {s.label}
+ </a>
+ ))}
+ </div>
+ </div>
+ </div>
+ <div>
+ &copy; {new Date().getFullYear()} AquaShine Car Wash. All rights reserved.
+ </div>
+ </footer>
+ </>
+ );
 }

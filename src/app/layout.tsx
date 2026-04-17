@@ -47,10 +47,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="theme-color" content="#0288d1" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-      </head>
       <body>{children}</body>
     </html>
   );
