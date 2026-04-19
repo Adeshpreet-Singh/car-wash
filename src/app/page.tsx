@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent, useRef } from 'react';
 
 /* ── constants ────────────────────────────────────────────── */
-const PHONE = '+15551234567';
+const PHONE = '+1 (555) 123-4567';
+const PHONE_TEL = '+15551234567';
 const EMAIL = 'hello@aquashinewash.com';
 const ADDRESS = '742 Sparkle Lane, Austin, TX 78701';
 const WHATSAPP = '15551234567';
@@ -106,9 +107,35 @@ function useReveal() {
   }, []);
 }
 
+/* ── mobile menu hook ────────────────────────────────────── */
+function useMobileMenu() {
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    function handleResize() {
+      if (window.innerWidth > 768) setOpen(false);
+    }
+    document.addEventListener('mousedown', handleClick);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return { open, setOpen, menuRef };
+}
+
 /* ── page ─────────────────────────────────────────────────── */
 export default function Page() {
   useReveal();
+  const { open, setOpen, menuRef } = useMobileMenu();
 
   /* contact form state */
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -145,65 +172,143 @@ export default function Page() {
           position: 'sticky',
           top: 0,
           zIndex: 50,
-          background: 'rgba(255,255,255,0.92)',
+          background: 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(12px)',
           borderBottom: '1px solid var(--border)',
-          padding: '0.85rem 2rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          padding: '0.85rem 1.5rem',
         }}
       >
-        <a href="#top" style={{ fontWeight: 900, fontSize: '1.3rem', color: 'var(--accent)', textDecoration: 'none', letterSpacing: '-0.03em' }}>
-          💧 AquaShine
-        </a>
-        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-          {['Services', 'Pricing', 'Hours', 'Contact'].map((s) => (
-            <a key={s} href={`#${s.toLowerCase()}`} style={{ color: 'var(--body)', textDecoration: 'none' }}>
-              {s}
+        <div
+          ref={menuRef}
+          style={{
+            maxWidth: 1200,
+            margin: '0 auto',
+            width: '100%',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <a href="#top" style={{ fontWeight: 900, fontSize: '1.35rem', color: 'var(--accent-dark)', textDecoration: 'none', letterSpacing: '-0.03em', flexShrink: 0 }}>
+              💧 AquaShine
             </a>
-          ))}
-          <a href={`tel:${PHONE}`} className="btn" style={{ padding: '0.5rem 1.2rem', fontSize: '0.8rem' }}>
-            📞 Call Now
-          </a>
+            {/* Desktop nav */}
+            <div className="desktop-nav" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+              {['Services', 'Pricing', 'Hours', 'Contact'].map((s) => (
+                <a key={s} href={`#${s.toLowerCase()}`} style={{ color: 'var(--heading)', textDecoration: 'none', fontWeight: 600 }}>
+                  {s}
+                </a>
+              ))}
+              <a href={`tel:${PHONE_TEL}`} className="btn" style={{ padding: '0.6rem 1.4rem', fontSize: '0.85rem' }}>
+                📞 Call Now
+              </a>
+            </div>
+            {/* Mobile hamburger */}
+            <button
+              className="hamburger"
+              onClick={() => setOpen(!open)}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              style={{
+                display: 'none',
+                background: 'none',
+                border: 'none',
+                fontSize: '1.8rem',
+                cursor: 'pointer',
+                padding: '0.5rem',
+                minWidth: 44,
+                minHeight: 44,
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--heading)',
+              }}
+            >
+              {open ? '✕' : '☰'}
+            </button>
+          </div>
+          {/* Mobile dropdown */}
+          {open && (
+            <div
+              className="mobile-menu"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.25rem',
+                padding: '0.5rem 0 1rem',
+                borderTop: '1px solid var(--border)',
+                marginTop: '0.85rem',
+              }}
+            >
+              {['Services', 'Pricing', 'Hours', 'Contact'].map((s) => (
+                <a
+                  key={s}
+                  href={`#${s.toLowerCase()}`}
+                  onClick={() => setOpen(false)}
+                  style={{
+                    color: 'var(--heading)',
+                    textDecoration: 'none',
+                    padding: '0.85rem 1rem',
+                    borderRadius: 'var(--radius)',
+                    fontSize: '1.05rem',
+                    fontWeight: 600,
+                    minHeight: 48,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  {s}
+                </a>
+              ))}
+              <a
+                href={`tel:${PHONE_TEL}`}
+                className="btn"
+                style={{ padding: '0.85rem 1.4rem', fontSize: '0.95rem', justifyContent: 'center', marginTop: '0.5rem', minHeight: 52 }}
+              >
+                📞 Call Now
+              </a>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* ════════════ HERO ════════════ */}
-      <section id="top" className="hero" style={{ padding: '6rem 2rem 5rem', textAlign: 'center' }}>
+      <section id="top" className="hero" style={{ padding: '5rem 1.5rem 4.5rem', textAlign: 'center' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <span className="badge">Austin's #1 Rated Car Wash</span>
-          <h1 className="heading" style={{ fontSize: 'clamp(2.4rem, 6vw, 4rem)', marginTop: '1rem' }}>
+          <h1 className="heading" style={{ fontSize: 'clamp(2.6rem, 7vw, 4.2rem)', marginTop: '1rem', lineHeight: 1.1 }}>
             A Shine That<br />Speaks for Itself
           </h1>
-          <p style={{ marginTop: '1rem', color: 'var(--body)', fontSize: '1.15rem', maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ marginTop: '1.25rem', color: 'var(--heading)', fontSize: 'clamp(1.05rem, 2.5vw, 1.3rem)', maxWidth: 560, marginLeft: 'auto', marginRight: 'auto', opacity: 0.75, lineHeight: 1.7 }}>
             From a quick exterior rinse to full paint correction & ceramic coating — we treat every car like our own.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
-            <a href="#services" className="btn">View Services ↓</a>
-            <a href="#contact" className="btn-outline">Book Online</a>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
+            <a href="#services" className="btn" style={{ minHeight: 52, padding: '1rem 2.4rem' }}>View Services ↓</a>
+            <a href="#contact" className="btn-outline" style={{ minHeight: 52, padding: '1rem 2.4rem' }}>Book Online</a>
           </div>
         </div>
       </section>
 
       {/* ════════════ SERVICES ════════════ */}
-      <section id="services" style={{ padding: '5rem 2rem' }}>
+      <section id="services" style={{ padding: '5rem 1.5rem' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span className="badge">What We Offer</span>
-            <h2 className="heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginTop: '0.75rem' }}>
+            <h2 className="heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', marginTop: '0.75rem' }}>
               Our Services
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
             {SERVICES.map((s) => (
               <div key={s.title} className="card reveal">
-                <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{s.icon}</div>
-                <h3 style={{ fontWeight: 800, fontSize: '1.25rem' }}>{s.title}</h3>
-                <p style={{ color: 'var(--body)', marginTop: '0.5rem', flex: 1 }}>{s.desc}</p>
+                <div style={{ fontSize: '2.8rem', marginBottom: '0.75rem' }}>{s.icon}</div>
+                <h3 style={{ fontWeight: 800, fontSize: '1.4rem' }}>{s.title}</h3>
+                <p style={{ color: 'var(--heading)', opacity: 0.7, marginTop: '0.5rem', flex: 1, fontSize: '1rem' }}>{s.desc}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '1.25rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-                  <span style={{ fontWeight: 900, fontSize: '1.6rem', color: 'var(--accent)' }}>{s.price}</span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--body)' }}>{s.duration}</span>
+                  <span style={{ fontWeight: 900, fontSize: '1.8rem', color: 'var(--accent-dark)' }}>{s.price}</span>
+                  <span style={{ fontSize: '0.95rem', color: 'var(--heading)', opacity: 0.6 }}>{s.duration}</span>
                 </div>
               </div>
             ))}
@@ -212,16 +317,16 @@ export default function Page() {
       </section>
 
       {/* ════════════ PACKAGES / MEMBERSHIP ════════════ */}
-      <section id="pricing" className="section-alt" style={{ padding: '5rem 2rem' }}>
+      <section id="pricing" className="section-alt" style={{ padding: '5rem 1.5rem' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span className="badge">Membership Plans</span>
-            <h2 className="heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginTop: '0.75rem' }}>
+            <h2 className="heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', marginTop: '0.75rem' }}>
               Save Big Every Month
             </h2>
-            <p style={{ color: 'var(--body)', marginTop: '0.5rem' }}>No contracts. Cancel anytime. All plans include priority lane.</p>
+            <p style={{ color: 'var(--heading)', opacity: 0.7, marginTop: '0.5rem', fontSize: '1.05rem' }}>No contracts. Cancel anytime. All plans include priority lane.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
             {PACKAGES.map((pkg) => (
               <div
                 key={pkg.name}
@@ -253,19 +358,19 @@ export default function Page() {
                     Most Popular
                   </span>
                 )}
-                <h3 style={{ fontWeight: 800, fontSize: '1.3rem', marginTop: pkg.highlight ? '0.5rem' : 0 }}>{pkg.name}</h3>
+                <h3 style={{ fontWeight: 800, fontSize: '1.4rem', marginTop: pkg.highlight ? '0.5rem' : 0 }}>{pkg.name}</h3>
                 <div style={{ margin: '1rem 0' }}>
-                  <span style={{ fontWeight: 900, fontSize: '2.2rem', color: 'var(--accent)' }}>{pkg.price}</span>
-                  <span style={{ color: 'var(--body)' }}>{pkg.period}</span>
+                  <span style={{ fontWeight: 900, fontSize: '2.4rem', color: 'var(--accent-dark)' }}>{pkg.price}</span>
+                  <span style={{ color: 'var(--heading)', opacity: 0.6 }}>{pkg.period}</span>
                 </div>
                 <ul style={{ listStyle: 'none', padding: 0, textAlign: 'left', flex: 1 }}>
                   {pkg.features.map((f) => (
-                    <li key={f} style={{ padding: '0.4rem 0', borderBottom: '1px solid var(--border)' }}>
+                    <li key={f} style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--border)', fontSize: '1rem', color: 'var(--heading)', opacity: 0.8 }}>
                       ✓&ensp;{f}
                     </li>
                   ))}
                 </ul>
-                <a href="#contact" className={pkg.highlight ? 'btn' : 'btn-outline'} style={{ marginTop: '1.5rem', justifyContent: 'center', width: '100%' }}>
+                <a href="#contact" className={pkg.highlight ? 'btn' : 'btn-outline'} style={{ marginTop: '1.5rem', justifyContent: 'center', width: '100%', minHeight: 52, fontSize: '0.95rem' }}>
                   Get Started
                 </a>
               </div>
@@ -275,15 +380,15 @@ export default function Page() {
       </section>
 
       {/* ════════════ WHY CHOOSE US ════════════ */}
-      <section style={{ padding: '5rem 2rem' }}>
+      <section style={{ padding: '5rem 1.5rem' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <div className="reveal">
             <span className="badge">Why AquaShine</span>
-            <h2 className="heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginTop: '0.75rem', marginBottom: '2rem' }}>
+            <h2 className="heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', marginTop: '0.75rem', marginBottom: '2.5rem' }}>
               Built on Trust & Quality
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '2.5rem' }}>
             {[
               { icon: '🏆', stat: '12+', label: 'Years Experience' },
               { icon: '🚗', stat: '50k+', label: 'Cars Washed' },
@@ -291,9 +396,9 @@ export default function Page() {
               { icon: '🌿', stat: '100%', label: 'Eco-Friendly Products' },
             ].map((item) => (
               <div key={item.label} className="reveal">
-                <div style={{ fontSize: '2.2rem' }}>{item.icon}</div>
-                <div style={{ fontWeight: 900, fontSize: '1.8rem', color: 'var(--accent)', marginTop: '0.25rem' }}>{item.stat}</div>
-                <div style={{ color: 'var(--body)', fontSize: '0.9rem' }}>{item.label}</div>
+                <div style={{ fontSize: '2.5rem' }}>{item.icon}</div>
+                <div style={{ fontWeight: 900, fontSize: '2rem', color: 'var(--accent-dark)', marginTop: '0.25rem' }}>{item.stat}</div>
+                <div style={{ color: 'var(--heading)', opacity: 0.65, fontSize: '1rem', marginTop: '0.25rem' }}>{item.label}</div>
               </div>
             ))}
           </div>
@@ -301,35 +406,35 @@ export default function Page() {
       </section>
 
       {/* ════════════ HOURS & MAP ════════════ */}
-      <section id="hours" className="section-alt" style={{ padding: '5rem 2rem' }}>
+      <section id="hours" className="section-alt" style={{ padding: '5rem 1.5rem' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span className="badge">Find Us</span>
-            <h2 className="heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginTop: '0.75rem' }}>
+            <h2 className="heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', marginTop: '0.75rem' }}>
               Hours & Location
             </h2>
           </div>
           <div className="reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', alignItems: 'start' }}>
             {/* hours card */}
             <div className="card" style={{ gap: '0.5rem' }}>
-              <h3 style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem' }}>🕐 Business Hours</h3>
+              <h3 style={{ fontWeight: 800, fontSize: '1.3rem', marginBottom: '0.5rem' }}>🕐 Business Hours</h3>
               {HOURS.map((h) => (
-                <div key={h.day} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.6rem 0', borderBottom: '1px solid var(--border)' }}>
-                  <span style={{ fontWeight: 600 }}>{h.day}</span>
-                  <span style={{ color: 'var(--body)' }}>{h.time}</span>
+                <div key={h.day} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem 0', borderBottom: '1px solid var(--border)' }}>
+                  <span style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--heading)' }}>{h.day}</span>
+                  <span style={{ color: 'var(--heading)', opacity: 0.7, fontSize: '1rem' }}>{h.time}</span>
                 </div>
               ))}
-              <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: 'var(--body)' }}>
+              <p style={{ marginTop: '0.75rem', fontSize: '1rem', color: 'var(--heading)', opacity: 0.7 }}>
                 📍 {ADDRESS}
                 <br />
-                <a href={`https://maps.google.com/?q=${MAPS_QUERY}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontWeight: 600 }}>
+                <a href={`https://maps.google.com/?q=${MAPS_QUERY}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-dark)', fontWeight: 700, fontSize: '1rem' }}>
                   Get Directions →
                 </a>
               </p>
-              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
-                <a href={`tel:${PHONE}`} className="btn" style={{ padding: '0.6rem 1.4rem', fontSize: '0.8rem' }}>📞 Call</a>
-                <a href={`mailto:${EMAIL}`} className="btn-outline" style={{ padding: '0.6rem 1.4rem', fontSize: '0.8rem' }}>✉️ Email</a>
-                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: '0.6rem 1.4rem', fontSize: '0.8rem' }}>💬 WhatsApp</a>
+              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+                <a href={`tel:${PHONE_TEL}`} className="btn" style={{ padding: '0.75rem 1.5rem', fontSize: '0.9rem', minHeight: 48 }}>📞 Call</a>
+                <a href={`mailto:${EMAIL}`} className="btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '0.9rem', minHeight: 48 }}>✉️ Email</a>
+                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '0.9rem', minHeight: 48 }}>💬 WhatsApp</a>
               </div>
             </div>
 
@@ -351,39 +456,39 @@ export default function Page() {
       </section>
 
       {/* ════════════ FAQ ════════════ */}
-      <section style={{ padding: '5rem 2rem' }}>
+      <section style={{ padding: '5rem 1.5rem' }}>
         <div style={{ maxWidth: 760, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <span className="badge">FAQ</span>
-            <h2 className="heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginTop: '0.75rem' }}>
+            <h2 className="heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', marginTop: '0.75rem' }}>
               Common Questions
             </h2>
           </div>
           {FAQS.map((f, i) => (
             <details key={i} className="reveal" style={{ borderBottom: '1px solid var(--border)' }}>
-              <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '1.05rem' }}>
                 {f.q}
-                <span style={{ fontSize: '1.2rem', color: 'var(--accent)' }}>+</span>
+                <span style={{ fontSize: '1.4rem', color: 'var(--accent)', fontWeight: 700, flexShrink: 0, marginLeft: '1rem' }}>+</span>
               </summary>
-              <p style={{ padding: '0 0 1.25rem', color: 'var(--body)' }}>{f.a}</p>
+              <p style={{ padding: '0 0 1.25rem', color: 'var(--heading)', opacity: 0.7, fontSize: '1rem' }}>{f.a}</p>
             </details>
           ))}
         </div>
       </section>
 
       {/* ════════════ CONTACT ════════════ */}
-      <section id="contact" className="section-alt" style={{ padding: '5rem 2rem' }}>
+      <section id="contact" className="section-alt" style={{ padding: '5rem 1.5rem' }}>
         <div style={{ maxWidth: 760, margin: '0 auto' }}>
           <div className="reveal" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <span className="badge">Get in Touch</span>
-            <h2 className="heading" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginTop: '0.75rem' }}>
+            <h2 className="heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', marginTop: '0.75rem' }}>
               Book or Ask a Question
             </h2>
-            <p style={{ color: 'var(--body)', marginTop: '0.5rem' }}>
+            <p style={{ color: 'var(--heading)', opacity: 0.7, marginTop: '0.5rem', fontSize: '1.05rem' }}>
               Or reach us directly:{' '}
-              <a href={`tel:${PHONE}`} style={{ color: 'var(--accent)', fontWeight: 700 }}>{PHONE}</a>
+              <a href={`tel:${PHONE_TEL}`} style={{ color: 'var(--accent-dark)', fontWeight: 700 }}>{PHONE}</a>
               {' · '}
-              <a href={`mailto:${EMAIL}`} style={{ color: 'var(--accent)', fontWeight: 700 }}>{EMAIL}</a>
+              <a href={`mailto:${EMAIL}`} style={{ color: 'var(--accent-dark)', fontWeight: 700 }}>{EMAIL}</a>
             </p>
           </div>
 
@@ -405,7 +510,7 @@ export default function Page() {
               <option>Other</option>
             </select>
             <textarea name="message" rows={4} placeholder="Tell us about your vehicle or question…" required style={{ width: '100%', resize: 'vertical' }} />
-            <button type="submit" className="btn" disabled={status === 'sending'} style={{ width: '100%', justifyContent: 'center' }}>
+            <button type="submit" className="btn" disabled={status === 'sending'} style={{ width: '100%', justifyContent: 'center', minHeight: 52, fontSize: '0.95rem' }}>
               {status === 'sending' ? 'Sending…' : status === 'sent' ? '✓ Sent!' : 'Send Message'}
             </button>
             {status === 'error' && (
@@ -441,7 +546,7 @@ export default function Page() {
           <div>
             <h4 style={{ color: 'white', fontWeight: 700, marginBottom: '0.75rem' }}>Contact</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.9rem' }}>
-              <a href={`tel:${PHONE}`} style={{ color: 'rgba(255,255,255,0.7)' }}>📞 {PHONE}</a>
+              <a href={`tel:${PHONE_TEL}`} style={{ color: 'rgba(255,255,255,0.7)' }}>📞 {PHONE}</a>
               <a href={`mailto:${EMAIL}`} style={{ color: 'rgba(255,255,255,0.7)' }}>✉️ {EMAIL}</a>
               <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.7)' }}>💬 WhatsApp</a>
               <a href={`https://maps.google.com/?q=${MAPS_QUERY}`} target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.7)' }}>📍 {ADDRESS}</a>
