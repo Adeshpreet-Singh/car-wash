@@ -280,7 +280,7 @@ export default function Page() {
       {/* ════════════ SERVICES ════════════ */}
       <section id="services">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">Services</span>
             <h2 className="section-heading">
               Precision-Crafted<br />
@@ -289,7 +289,7 @@ export default function Page() {
           </div>
           <div className="grid-3">
             {SERVICES.map((s, idx) => (
-              <div key={s.title} className="service-card reveal" style={{ animationDelay: `${idx * 100}ms` }}>
+              <div key={s.title} className="service-card hover-lift reveal" style={{ animationDelay: `${idx * 100}ms` }}>
                 <span className="service-tag">{s.tag}</span>
                 <div className="service-icon">{s.icon}</div>
                 <h3>{s.title}</h3>
@@ -308,7 +308,7 @@ export default function Page() {
       {/* ════════════ GALLERY ════════════ */}
       <section className="gallery-section">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">Gallery</span>
             <h2 className="section-heading">
               The <span className="gradient-text">CrystalTide</span> Difference
@@ -335,7 +335,7 @@ export default function Page() {
       {/* ════════════ WHY US (STATS) ════════════ */}
       <section className="stats-section">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">Why CrystalTide</span>
             <h2 className="section-heading">
               Trusted by <span className="gradient-text">Thousands</span>
@@ -345,7 +345,7 @@ export default function Page() {
             {counters.map((c, i) => {
               const counter = useCounter(c.val);
               return (
-                <div key={c.label} className="stat-card">
+                <div key={c.label} className="stat-card hover-lift">
                   <span ref={counter.ref} className="stat-value">{counter.display}</span>
                   <span className="stat-label">{c.label}</span>
                 </div>
@@ -358,7 +358,7 @@ export default function Page() {
       {/* ════════════ PACKAGES / MEMBERSHIP ════════════ */}
       <section id="pricing">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">Membership</span>
             <h2 className="section-heading">
               Ride the <span className="gradient-text">Wave</span>
@@ -395,7 +395,7 @@ export default function Page() {
       {/* ════════════ PROCESS ════════════ */}
       <section className="process-section">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">How It Works</span>
             <h2 className="section-heading">
               Simple as <span className="gradient-text">1-2-3</span>
@@ -407,7 +407,7 @@ export default function Page() {
               { step: '02', title: 'Pick Your Wash', desc: 'Choose from our handcrafted service tiers or speak with our team for a custom quote.' },
               { step: '03', title: 'Drive Out Shining', desc: 'Walk through our quality check tunnel, spotless and ready to turn heads.' },
             ].map((s, i) => (
-              <div key={s.step} className="process-card">
+              <div key={s.step} className="process-card hover-lift">
                 <span className="process-step">{s.step}</span>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
@@ -420,14 +420,14 @@ export default function Page() {
       {/* ════════════ HOURS & MAP ════════════ */}
       <section id="hours">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">Visit Us</span>
             <h2 className="section-heading">
               Hours & <span className="gradient-text">Location</span>
             </h2>
           </div>
           <div className="grid-2 reveal">
-            <div className="glass-card">
+            <div className="glass-card hover-lift">
               <h3>Business Hours</h3>
               <div className="hours-list">
                 {HOURS.map((h) => (
@@ -469,7 +469,7 @@ export default function Page() {
       {/* ════════════ FAQ ════════════ */}
       <section className="faq-section">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">FAQ</span>
             <h2 className="section-heading">
               Common <span className="gradient-text">Questions</span>
@@ -494,7 +494,7 @@ export default function Page() {
       {/* ════════════ CONTACT ════════════ */}
       <section id="contact" className="contact-section">
         <div className="container">
-          <div className="reveal section-header">
+          <div className="reveal section-header animate-fade-in-up">
             <span className="badge-glow">Book Now</span>
             <h2 className="section-heading">
               Ready for the <span className="gradient-text">Crystal Touch?</span>
@@ -505,7 +505,7 @@ export default function Page() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="glass-card contact-form reveal">
+          <form onSubmit={handleSubmit} className="glass-card hover-lift contact-form reveal">
             <input type="hidden" name="subject" value="New inquiry from CrystalTide website" />
             <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" style={{ display: 'none' }} />
             <div className="form-row">
