@@ -960,3 +960,10 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.15; letter-spacing: -0.03em; font-weight: 700
 .hover-scale:hover { transform: scale(1.05); }
 .hover-glow { transition: all 0.3s ease; }
 .hover-glow:hover { box-shadow: 0 0 20px rgba(var(--accent-rgb, 59, 130, 246), 0.4); }
+
+
+.section-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
