@@ -967,3 +967,21 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.15; letter-spacing: -0.03em; font-weight: 700
   margin: 0 auto;
   padding: 0 2rem;
 }
+
+
+/* Section spacing */
+.section-container { padding: 0 2rem; }
+section, .section { margin-bottom: 0; }
+
+/* Grid gaps */
+.gap-sm { gap: 1rem; }
+.gap-md { gap: 1.5rem; }
+.gap-lg { gap: 2rem; }
+.gap-xl { gap: 2.5rem; }
+.gap-2xl { gap: 3rem; }
+
+/* Vertical rhythm */
+.vt-sm { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+.vt-md { margin-top: 2.5rem; margin-bottom: 2.5rem; }
+.vt-lg { margin-top: 4rem; margin-bottom: 4rem; }
+.vt-xl { margin-top: 5rem; margin-bottom: 5rem; }
