@@ -56,7 +56,7 @@ section { position: relative; overflow: hidden; padding: clamp(3rem, 8vw, 7rem) 
 h1,h2,h3,h4,h5,h6 { line-height: 1.15; letter-spacing: -0.03em; font-weight: 700; color: #fff; }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 clamp(1.25rem, 4vw, 2rem);
   width: 100%;
@@ -166,7 +166,7 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.15; letter-spacing: -0.03em; font-weight: 700
   align-items: center;
   justify-content: space-between;
   padding: 1rem clamp(1.25rem, 4vw, 2rem);
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
   background: rgba(10, 10, 15, 0.8);
   backdrop-filter: blur(20px) saturate(1.4);
@@ -303,7 +303,7 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.15; letter-spacing: -0.03em; font-weight: 700
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  max-width: 900px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid var(--border);
