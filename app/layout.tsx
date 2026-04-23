@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'AquaShine Car Wash | Premium Car Detailing & Wash Services',
     description:
       'Expert hand wash, premium detailing, ceramic coating & interior deep clean. Book online or drive in today.',
-    url: 'https://aquashinewash.com',
+    url: '[WEBSITE]',
     siteName: 'AquaShine Car Wash',
     type: 'website',
     locale: 'en_US',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
       'Expert hand wash, premium detailing, ceramic coating & interior deep clean.',
     images: ['/og-image.jpg'],
   },
-  alternates: { canonical: 'https://aquashinewash.com' },
+  alternates: { canonical: '[WEBSITE]' },
 };
 
 export const viewport = {

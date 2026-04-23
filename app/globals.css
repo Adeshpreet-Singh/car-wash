@@ -1,12 +1,23 @@
+:root {
+  --font-heading: "Inter", serif;
+  --font-body: "Inter", sans-serif;
+  --bg-canvas: #f3f4f6;
+  --bg-panel: #ffffff;
+  --bg-elevated: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #6b7280;
+  --accent-brand: #f59e0b;
+  --accent-interactive: #4b5563;
+  --surface-translucent: rgba(255,255,255,0.08);
+  --surface-translucent-hover: rgba(255,255,255,0.12);
+  --surface-translucent-active: rgba(255,255,255,0.16);
+  --border-default: rgba(0,0,0,0.1);
+  --border-subtle: rgba(0,0,0,0.05);
+  --border-hover: rgba(0,0,0,0.2);
+}
 /* FONTS_INJECTED */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-:root {
-  --font-heading: 'Inter', serif;
-  --font-body: 'Inter', sans-serif;
-
-  --text-primary: var(--text, #1a1a2e);
-  --text-secondary: var(--muted, #6c757d);
-}
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
 body { font-family: var(--font-body); }
 
@@ -17,16 +28,6 @@ body { font-family: var(--font-body); }
 /* ═══════════════════════════════════════════════════════════
    CrystalTide — Dark Luxury Car Wash Theme
    ═══════════════════════════════════════════════════════════ */
-
-:root {
-  --primary: #374151;
-  --secondary: #4b5563;
-  --accent: #f59e0b;
-  --bg: #f3f4f6;
-  --surface: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-}
 
 html { scroll-behavior: smooth; }
 
