@@ -4,8 +4,8 @@ import { useEffect, useState, useRef, type FormEvent } from 'react';
 
 /* constants */
 const PHONE = '+15551234567';
-const EMAIL = '[EMAIL]';
-const ADDRESS = '[ADDRESS]';
+const EMAIL = 'contact@example.com';
+const ADDRESS = '123 Main Street, City, India';
 const WHATSAPP = '15551234567';
 const MAPS_QUERY = encodeURIComponent(ADDRESS);
 
@@ -439,15 +439,15 @@ export default function Page() {
  ))}
  </div>
           <p className="address-line">
-            [ADDRESS]{' '}
+            123 Main Street, City, India{' '}
             <a href="[GOOGLE_MAPS_URL]" target="_blank" rel="noopener noreferrer">
               Directions →
             </a>
           </p>
           <div className="contact-chips">
-            <a href="tel:[PHONE]" className="chip"> [PHONE]</a>
-            <a href="mailto:[EMAIL]" className="chip"> [EMAIL]</a>
-            <a href="https://wa.me/[PHONE]" target="_blank" rel="noopener noreferrer" className="chip"> WhatsApp</a>
+            <a href="tel:+91 98765 43210" className="chip"> +91 98765 43210</a>
+            <a href="mailto:contact@example.com" className="chip"> contact@example.com</a>
+            <a href="https://wa.me/+91 98765 43210" target="_blank" rel="noopener noreferrer" className="chip"> WhatsApp</a>
           </div>
  </div>
  <div className="map-container">
