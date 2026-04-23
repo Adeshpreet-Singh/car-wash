@@ -17,7 +17,7 @@ const HOURS = [
 
 const SERVICES = [
   {
-    icon: '🫧',
+    icon: '',
     title: 'Aqua Rinse',
     desc: 'High-pressure pure water wash, microfiber dry, tire conditioning & streak-free windows.',
     price: '$24',
@@ -25,7 +25,7 @@ const SERVICES = [
     tag: 'Express',
   },
   {
-    icon: '💎',
+    icon: '',
     title: 'Crystal Detail',
     desc: 'Clay bar decontamination, dual-action polish, sealant protection & full interior refresh.',
     price: '$59',
@@ -445,9 +445,9 @@ export default function Page() {
                 </a>
               </p>
               <div className="contact-chips">
-                <a href={`tel:${PHONE}`} className="chip">📞 {PHONE}</a>
+                <a href={`tel:${PHONE}`} className="chip"> {PHONE}</a>
                 <a href={`mailto:${EMAIL}`} className="chip">✉️ {EMAIL}</a>
-                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="chip">💬 WhatsApp</a>
+                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="chip"> WhatsApp</a>
               </div>
             </div>
             <div className="map-container">
