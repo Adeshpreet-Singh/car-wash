@@ -1,3 +1,12 @@
+/* FONTS_INJECTED */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+:root {
+  --font-heading: 'Inter', serif;
+  --font-body: 'Inter', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
+body { font-family: var(--font-body); }
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @import "tailwindcss";
@@ -7,27 +16,13 @@
    ═══════════════════════════════════════════════════════════ */
 
 :root {
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #111118;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
-  --text-primary: #e8e8ed;
-  --text-secondary: #8888a0;
-  --text-muted: #55556a;
-  --accent: #00d4ff;
-  --accent-alt: #7b61ff;
-  --accent-warm: #ff6b9d;
-  --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #7b61ff 50%, #ff6b9d 100%);
-  --gradient-subtle: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(123, 97, 255, 0.15) 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-  --border: rgba(255, 255, 255, 0.06);
-  --border-active: rgba(0, 212, 255, 0.3);
-  --radius: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --shadow-glow: 0 0 60px rgba(0, 212, 255, 0.08);
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --primary: #374151;
+  --secondary: #4b5563;
+  --accent: #f59e0b;
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
 }
 
 html { scroll-behavior: smooth; }
@@ -41,7 +36,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -772,7 +767,7 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.15; letter-spacing: -0.03em; font-weight: 700
   color: var(--text-primary) !important;
   padding: 0.85rem 1rem;
   border-radius: var(--radius);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.95rem !important;
   transition: var(--transition);
   appearance: none;
@@ -868,8 +863,8 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.15; letter-spacing: -0.03em; font-weight: 700
 
 /* ════════════ SCROLL REVEAL ═════════════════════════════ */
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .reveal.visible {
@@ -985,3 +980,13 @@ section, .section { margin-bottom: 0; }
 .vt-md { margin-top: 2.5rem; margin-bottom: 2.5rem; }
 .vt-lg { margin-top: 4rem; margin-bottom: 4rem; }
 .vt-xl { margin-top: 5rem; margin-bottom: 5rem; }
+/* DESIGN_SYSTEM_INJECTED */
+body {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+.bg-primary { background-color: #374151 !important; }
+.bg-secondary { background-color: #4b5563 !important; }
+.text-primary { color: #374151 !important; }
+.text-accent { color: #f59e0b !important; }
+.bg-accent { background-color: #f59e0b !important; }

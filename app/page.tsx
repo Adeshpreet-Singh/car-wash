@@ -578,7 +578,7 @@ export default function Page() {
               <h4>Follow</h4>
               <div className="social-links">
                 {['IG', 'FB', 'X', 'TT'].map((s) => (
-                  <a key={s} href="#" target="_blank" rel="noopener noreferrer" className="social-chip">
+                  <a key={s} href="/contact" target="_blank" rel="noopener noreferrer" className="social-chip">
                     {s}
                   </a>
                 ))}
