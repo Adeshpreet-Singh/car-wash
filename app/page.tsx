@@ -184,7 +184,7 @@ export default function Page() {
  setStatus('sending');
  const form = e.currentTarget;
  const fd = new FormData(form);
- fd.append('access_key', '[WEB3FORMS_KEY]');
+ fd.append('access_key', '00000000-0000-0000-0000-000000000000');
  try {
  const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
  const json = await res.json();
@@ -238,7 +238,7 @@ export default function Page() {
  style={{ transform: `translate(${scrollY * -0.04}px, ${scrollY * 0.03}px)` }}
  />
  <div className="container hero-content">
- <span className="badge-glow reveal">Austin&apos;s #1 Luxury Wash</span>
+ <span className="badge-glow reveal">Austin's #1 Luxury Wash</span>
  <h1 className="hero-heading reveal">
  Where Water
  <br />
@@ -445,9 +445,9 @@ export default function Page() {
             </a>
           </p>
           <div className="contact-chips">
-            <a href="tel:+91 98765 43210" className="chip"> +91 98765 43210</a>
+            <a href="tel:+1-800-555-0310" className="chip"> +1-800-555-0310</a>
             <a href="mailto:contact@example.com" className="chip"> contact@example.com</a>
-            <a href="https://wa.me/+91 98765 43210" target="_blank" rel="noopener noreferrer" className="chip"> WhatsApp</a>
+            <a href="https://wa.me/+1-800-555-0310" target="_blank" rel="noopener noreferrer" className="chip"> WhatsApp</a>
           </div>
  </div>
  <div className="map-container">
@@ -532,7 +532,7 @@ export default function Page() {
  {status === 'sending' ? 'Sending...' : status === 'sent' ? ' Sent!' : 'Send Message'}
  </button>
  {status === 'error' && <p className="form-msg form-error">Something went wrong. Please try again or call us directly.</p>}
- {status === 'sent' && <p className="form-msg form-success">Thanks! We&apos;ll get back to you within 1 business hour.</p>}
+ {status === 'sent' && <p className="form-msg form-success">Thanks! We'll get back to you within 1 business hour.</p>}
  </form>
  </div>
  </section>
@@ -546,7 +546,7 @@ export default function Page() {
  <span className="logo-icon"></span>
  <span>CrystalTide</span>
  </a>
- <p>Premium car wash &amp; detailing in Austin. Eco-friendly products, expert staff, and a shine you can trust.</p>
+ <p>Premium car wash & detailing in Austin. Eco-friendly products, expert staff, and a shine you can trust.</p>
  </div>
  <div>
  <h4>Links</h4>
